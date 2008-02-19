@@ -25,3 +25,9 @@
 #endif
 
 #include "winwrangler.h"
+
+void
+ww_layout_expand (GList *windows, WnckWindow *active, GError **error)
+{
+	
+}

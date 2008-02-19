@@ -37,16 +37,22 @@
 
 G_BEGIN_DECLS
 
+/* Function prototypes */
 typedef void (*WwLayoutHandler)	(GList		*windows,
 								 WnckWindow	*active,
 								 GError		**error);
 
+/* Structures */
 typedef struct {
-	gchar			*name;
-	WwLayoutHandler	handler;
+	const gchar			*name;
+	const gchar			*desc;
+	WwLayoutHandler		handler;
 } WwLayout;
 
-WwLayout[]		ww_get_layouts		(void);
+/* Functions */
+const WwLayout*		ww_get_layouts		(void);
+
+const WwLayout*		ww_get_layout		(const gchar		*layout_name);
 
 G_END_DECLS
 

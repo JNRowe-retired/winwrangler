@@ -54,20 +54,55 @@
 
 #include "winwrangler.h"
 
-static gchar *layout_name;
+static gchar *layout_name = NULL;
+static gboolean *print_layouts = FALSE;
 
 static GOptionEntry option_entries[] = 
 {
-  { "layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name, "The layout function to apply" },
-  { NULL }
+	{ "layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name, "The layout function to apply" },
+	{ "layouts", 0, 0, G_OPTION_ARG_NONE, &print_layouts, "Print a list of layout functions" },
+	{ NULL }
 };
+
+static void
+do_print_layouts (WwLayout *layouts)
+{	
+	WwLayout	*layout;
+	
+	g_return_if_fail (layouts != NULL);
+	
+	g_printf ("Known layouts:\n");
+	for (layout = layouts; layout->name != NULL; layout++)
+		{
+			g_return_if_fail (layout != NULL);
+			g_printf ("\t%s\t- %s\n", layout->name, layout->desc);
+		}
+}
+
+static void
+do_apply_layout (gchar *layout_name)
+{
+	WnckScreen	*screen;
+	WnckWindow	*active;
+	WwLayout	*layout;
+	
+	screen = wnck_screen_get_default ();
+	wnck_screen_force_update (screen);
+	
+	active = wnck_screen_get_active_window (screen);
+	
+	layout = ww_get_layout (layout_name);
+	if (!layout) {
+		g_printerr ("No such layout: '%s'. Try running with --layouts to "
+					"list possible layouts\n", layout_name);
+		return;
+	}
+}
 
 int
 main (int argc, char *argv[])
 {
-
-	WnckScreen* screen;
-	WnckWindow* active;
+	const WwLayout *layouts;
 	GError *error;
 	GOptionContext *options;
 	
@@ -79,6 +114,8 @@ main (int argc, char *argv[])
 
 	gtk_init (&argc, &argv);
 
+	layouts = ww_get_layouts ();
+	
 	options = g_option_context_new (NULL);
 	g_option_context_add_main_entries (options, option_entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (options, gtk_get_option_group (TRUE));
@@ -90,11 +127,15 @@ main (int argc, char *argv[])
 			return 1;
 		}
 	
-	screen = wnck_screen_get_default ();
-	wnck_screen_force_update (screen);
+	if (print_layouts) {
+		do_print_layouts (layouts);
+		return 0;
+	}
 	
-	active = wnck_screen_get_active_window (screen);
-
+	if (layout_name) {
+		do_apply_layout (layout_name);
+		return 0;
+	}
 	
 	return 0;
 }
