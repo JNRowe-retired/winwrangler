@@ -54,6 +54,13 @@
 
 #include "winwrangler.h"
 
+static gchar *layout_name;
+
+static GOptionEntry option_entries[] = 
+{
+  { "layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name, "The layout function to apply" },
+  { NULL }
+};
 
 int
 main (int argc, char *argv[])
@@ -61,6 +68,8 @@ main (int argc, char *argv[])
 
 	WnckScreen* screen;
 	WnckWindow* active;
+	GError *error;
+	GOptionContext *options;
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -68,7 +77,18 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 #endif
 
-	g_type_init ();
+	gtk_init (&argc, &argv);
+
+	options = g_option_context_new (NULL);
+	g_option_context_add_main_entries (options, option_entries, GETTEXT_PACKAGE);
+	g_option_context_add_group (options, gtk_get_option_group (TRUE));
+	
+	error = NULL;
+	if (!g_option_context_parse (options, &argc, &argv, &error))
+		{
+			g_print ("Bad command line: %s\n", error->message);
+			return 1;
+		}
 	
 	screen = wnck_screen_get_default ();
 	wnck_screen_force_update (screen);

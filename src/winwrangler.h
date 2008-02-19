@@ -20,6 +20,10 @@
  * 	Boston, MA  02110-1301, USA.
  */
 
+
+#ifndef _WW_H_
+#define _WW_H_
+
 #include <config.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
@@ -29,4 +33,13 @@
 
 #include <glib.h>
 #include <glib-object.h>
+#include <gtk/gtk.h>
 
+G_BEGIN_DECLS
+
+typedef void (*WwLayoutHandler)	(GList		*windows,
+								 WnckWindow	*active,
+								 GError		**error);
+G_END_DECLS
+
+#endif /* _WW_H_ */
