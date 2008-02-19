@@ -40,6 +40,14 @@ G_BEGIN_DECLS
 typedef void (*WwLayoutHandler)	(GList		*windows,
 								 WnckWindow	*active,
 								 GError		**error);
+
+typedef struct {
+	gchar			*name;
+	WwLayoutHandler	handler;
+} WwLayout;
+
+WwLayout[]		ww_get_layouts		(void);
+
 G_END_DECLS
 
 #endif /* _WW_H_ */

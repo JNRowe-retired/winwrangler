@@ -18,7 +18,8 @@ bin_PROGRAMS = winwrangler
 winwrangler_SOURCES = \
 	main.c       \
 	winwrangler.h       \
-	ww-layout-expand.c
+	ww-layout-expand.c       \
+	ww-layouts.c
 
 winwrangler_LDFLAGS = 
 
