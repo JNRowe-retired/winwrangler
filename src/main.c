@@ -83,20 +83,37 @@ static void
 do_apply_layout (gchar *layout_name)
 {
 	WnckScreen	*screen;
+	GList		*windows;
 	WnckWindow	*active;
 	WwLayout	*layout;
+	GError		*error;
 	
 	screen = wnck_screen_get_default ();
 	wnck_screen_force_update (screen);
 	
+	windows = wnck_screen_get_windows (screen);
 	active = wnck_screen_get_active_window (screen);
 	
+	/* Check that we know the requested layout */
 	layout = ww_get_layout (layout_name);
-	if (!layout) {
-		g_printerr ("No such layout: '%s'. Try running with --layouts to "
-					"list possible layouts\n", layout_name);
-		return;
-	}
+	if (!layout)
+		{
+			g_printerr ("No such layout: '%s'. Try running with --layouts to "
+						"list possible layouts\n", layout_name);
+			return;
+		}
+	
+	/* Apply the layout */
+	error = NULL;
+	layout->handler (windows, active, &error);
+	
+	if (error)
+		{
+			g_printerr ("Failed to apply layout '%s'. Error was:\n%s",
+						layout_name, error->message);
+			g_error_free (error);
+			return;
+		}
 }
 
 int
@@ -127,15 +144,17 @@ main (int argc, char *argv[])
 			return 1;
 		}
 	
-	if (print_layouts) {
-		do_print_layouts (layouts);
-		return 0;
-	}
+	if (print_layouts)
+		{
+			do_print_layouts (layouts);
+			return 0;
+		}
 	
-	if (layout_name) {
-		do_apply_layout (layout_name);
-		return 0;
-	}
+	if (layout_name)
+		{
+			do_apply_layout (layout_name);
+			return 0;
+		}
 	
 	return 0;
 }
