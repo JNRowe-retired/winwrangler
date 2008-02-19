@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- * main.c
+ * main.c (winwrangler)
  * Copyright (C) Mikkel Kamstrup Erlandsen 2008 <mikkel.kamstrup@gmail.com>
  * 
  * main.c is free software; you can redistribute it and/or
@@ -25,11 +25,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
-
-#include <config.h>
-
-#include <gtk/gtk.h>
-#include <glade/glade.h>
 
 
 
@@ -57,47 +52,29 @@
 
 
 
-#include "callbacks.h"
-
-/* For testing propose use the local (not installed) glade file */
-/* #define GLADE_FILE PACKAGE_DATA_DIR"/winwrangler/glade/winwrangler.glade" */
-#define GLADE_FILE "winwrangler.glade"
-	
-GtkWidget*
-create_window (void)
-{
-	GtkWidget *window;
-	GladeXML *gxml;
-	
-	gxml = glade_xml_new (GLADE_FILE, NULL, NULL);
-	
-	/* This is important */
-	glade_xml_signal_autoconnect (gxml);
-	window = glade_xml_get_widget (gxml, "window");
-	
-	return window;
-}
+#include "winwrangler.h"
 
 
 int
 main (int argc, char *argv[])
 {
- 	GtkWidget *window;
 
-
+	WnckScreen* screen;
+	WnckWindow* active;
+	
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 #endif
 
+	g_type_init ();
 	
-	gtk_set_locale ();
-	gtk_init (&argc, &argv);
+	screen = wnck_screen_get_default ();
+	wnck_screen_force_update (screen);
+	
+	active = wnck_screen_get_active_window (screen);
 
-	window = create_window ();
-	gtk_widget_show (window);
-
-	gtk_main ();
+	
 	return 0;
 }

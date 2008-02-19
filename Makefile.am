@@ -8,7 +8,6 @@ winwranglerdoc_DATA = \
 	README\
 	COPYING\
 	AUTHORS\
-	ChangeLog\
 	INSTALL\
 	NEWS
 

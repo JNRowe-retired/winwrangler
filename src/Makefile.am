@@ -3,8 +3,6 @@
 ## Created by Anjuta
 
 gladedir = $(datadir)/winwrangler/glade
-glade_DATA = winwrangler.glade
-
 INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
@@ -18,9 +16,9 @@ AM_CFLAGS =\
 bin_PROGRAMS = winwrangler
 
 winwrangler_SOURCES = \
-	callbacks.c \
-	callbacks.h \
-	main.c
+	main.c       \
+	winwrangler.h       \
+	ww-layout-expand.c
 
 winwrangler_LDFLAGS = 
 
