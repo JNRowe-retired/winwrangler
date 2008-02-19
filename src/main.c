@@ -85,7 +85,7 @@ do_apply_layout (gchar *layout_name)
 	WnckScreen	*screen;
 	GList		*windows;
 	WnckWindow	*active;
-	WwLayout	*layout;
+	const WwLayout	*layout;
 	GError		*error;
 	
 	screen = wnck_screen_get_default ();
@@ -149,12 +149,17 @@ main (int argc, char *argv[])
 			do_print_layouts (layouts);
 			return 0;
 		}
-	
-	if (layout_name)
+	else if (layout_name)
 		{
 			do_apply_layout (layout_name);
 			return 0;
 		}
 	
-	return 0;
+	else
+		{
+			gchar *help_msg = g_option_context_get_help (options, TRUE, NULL);
+			g_printf (help_msg);
+			g_free (help_msg);
+			return 0;
+		}
 }
