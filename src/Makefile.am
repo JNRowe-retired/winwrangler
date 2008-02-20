@@ -20,7 +20,8 @@ winwrangler_SOURCES = \
 	winwrangler.h       \
 	ww-layout-expand.c       \
 	ww-layouts.c       \
-	ww-layouts.h
+	ww-layouts.h       \
+	ww-utils.c
 
 winwrangler_LDFLAGS = 
 

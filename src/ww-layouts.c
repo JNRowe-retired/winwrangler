@@ -13,18 +13,16 @@
  * License along with main.c; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
- 
+
 #include "winwrangler.h"
 #include "ww-layouts.h"
 
-static WwLayout layouts[] = 
-{
-  { "expand",
-	"Expand the currently active window to fill all available space "
-	"without overlapping any new windows",
-	ww_layout_expand
-  },
-  { NULL }
+static WwLayout layouts[] = {
+  {"expand",
+   "Expand the currently active window to fill all available space "
+   "without overlapping any new windows",
+   ww_layout_expand},
+  {NULL}
 };
 
 /**
@@ -34,10 +32,10 @@ static WwLayout layouts[] =
  *
  * Return value: An array containing all known WwLayouts
  */
-const WwLayout*
+const WwLayout *
 ww_get_layouts (void)
 {
-	return layouts;
+  return layouts;
 }
 
 /**
@@ -48,18 +46,18 @@ ww_get_layouts (void)
  *
  * Return value: The WwLayout with the given name or %NULL if none is found
  */
-const WwLayout*
-ww_get_layout (const gchar	*layout_name)
+const WwLayout *
+ww_get_layout (const gchar * layout_name)
 {
-	WwLayout	*layout;
-	
-	g_return_val_if_fail (layout_name != NULL, NULL);
-	
-	for (layout = layouts; layout->name != NULL; layout++)
-		{
-			if (g_str_equal (layout_name, layout->name))
-				return layout;
-		}
-	
-	return NULL;
+  WwLayout *layout;
+
+  g_return_val_if_fail (layout_name != NULL, NULL);
+
+  for (layout = layouts; layout->name != NULL; layout++)
+    {
+      if (g_str_equal (layout_name, layout->name))
+	return layout;
+    }
+
+  return NULL;
 }

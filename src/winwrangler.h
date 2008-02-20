@@ -36,25 +36,29 @@
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
-
 /* Function prototypes */
-typedef void (*WwLayoutHandler)	(WnckScreen	*screen,
-								 GList		*windows,
-								 WnckWindow	*active,
-								 GError		**error);
+typedef void (*WwLayoutHandler) (WnckScreen 	*screen,
+				 				 GList 			*windows,
+				 				 WnckWindow		*active,
+								 GError			**error);
 
 /* Structures */
-typedef struct {
-	const gchar			*name;
-	const gchar			*desc;
-	WwLayoutHandler		handler;
+typedef struct
+{
+  const gchar *name;
+  const gchar *desc;
+  WwLayoutHandler handler;
 } WwLayout;
 
-/* Functions */
-const WwLayout*		ww_get_layouts		(void);
+/* Constants */
+#define WW_MOVERESIZE_FLAGS WNCK_WINDOW_CHANGE_WIDTH | WNCK_WINDOW_CHANGE_HEIGHT | WNCK_WINDOW_CHANGE_X | WNCK_WINDOW_CHANGE_Y
 
-const WwLayout*		ww_get_layout		(const gchar		*layout_name);
+/* Functions */
+const WwLayout*		ww_get_layouts (void);
+
+const WwLayout*		ww_get_layout (const gchar * layout_name);
+
+GList*			ww_filter_user_windows (GList *windows);
 
 G_END_DECLS
-
 #endif /* _WW_H_ */
