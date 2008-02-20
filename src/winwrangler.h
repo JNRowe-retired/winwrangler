@@ -38,7 +38,8 @@
 G_BEGIN_DECLS
 
 /* Function prototypes */
-typedef void (*WwLayoutHandler)	(GList		*windows,
+typedef void (*WwLayoutHandler)	(WnckScreen	*screen,
+								 GList		*windows,
 								 WnckWindow	*active,
 								 GError		**error);
 

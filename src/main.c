@@ -105,7 +105,7 @@ do_apply_layout (gchar *layout_name)
 	
 	/* Apply the layout */
 	error = NULL;
-	layout->handler (windows, active, &error);
+	layout->handler (screen, windows, active, &error);
 	
 	if (error)
 		{

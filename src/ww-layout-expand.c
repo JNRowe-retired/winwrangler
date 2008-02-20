@@ -26,8 +26,21 @@
 
 #include "winwrangler.h"
 
+/**
+ * ww_layout_expand
+ * @screen: The screen to work on
+ * @windows: A list of all windows on the @screen
+ * @active: The currently active window
+ * @error: %GError to set on failure
+ *
+ * A %WwLayoutHandler expanding @active in all directions without it
+ * overlapping any windows it doesn't already.
+ */
 void
-ww_layout_expand (GList *windows, WnckWindow *active, GError **error)
+ww_layout_expand (WnckScreen *screen, 
+				  GList *windows,
+				  WnckWindow *active,
+				  GError **error)
 {
 	
 }
