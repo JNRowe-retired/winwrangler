@@ -69,6 +69,7 @@ create_action_group (const WwLayout *layouts)
 	gint i;
 	for (i = 0; i < num_layouts; i++)
 	{
+		g_debug ("Adding GtkAction '%s'", layouts[i].name);
 		entries[i].name = layouts[i].name;
 		entries[i].label = layouts[i].name;
 		entries[i].tooltip = layouts[i].desc;
@@ -81,7 +82,11 @@ create_action_group (const WwLayout *layouts)
 gchar*
 create_ui_def (const WwLayout *layouts)
 {
-	return g_strdup ("");
+	return g_strdup ("<ui>"
+                     "  <popup>"
+					 "      <menuitem name=\"Expand\" action=\"expand\"/>"
+					 "  </popup>"
+					 "</ui>");
 }
 
 int
@@ -111,11 +116,13 @@ main (int argc, char *argv[])
 	actions = create_action_group (layouts);
 	ui_def = create_ui_def (layouts);
 	
+	error = NULL;
 	gtk_ui_manager_insert_action_group (ui, actions, 0);
 	gtk_ui_manager_add_ui_from_string (ui, ui_def, -1, &error);
 	
 	if (error) {
 		g_critical ("Failed to create ui: %s\n", error->message);
+		g_printf ("%s\n", ui_def);
 		g_error_free (error);
 		return 1;
 	}
