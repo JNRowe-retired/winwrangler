@@ -76,6 +76,11 @@ create_action_group (const WwLayout *layouts)
 		entries[i].callback = G_CALLBACK (dispatch_layout_handler);
 	}
 	
+	gtk_action_group_add_actions (actions, entries, num_layouts, NULL);
+	
+	for (i = 0; i < num_layouts; i++)
+		g_free (entries + i);
+	
 	return actions;
 }
 
@@ -114,10 +119,10 @@ main (int argc, char *argv[])
 	
 	ui = gtk_ui_manager_new ();
 	actions = create_action_group (layouts);
-	ui_def = create_ui_def (layouts);
+	gtk_ui_manager_insert_action_group (ui, actions, 0);
 	
 	error = NULL;
-	gtk_ui_manager_insert_action_group (ui, actions, 0);
+	ui_def = create_ui_def (layouts);
 	gtk_ui_manager_add_ui_from_string (ui, ui_def, -1, &error);
 	
 	if (error) {
