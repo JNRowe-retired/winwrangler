@@ -14,5 +14,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
  
+#ifndef _WW_LAYOUTS_H_
+#define _WW_LAYOUTS_H_
 
-void ww_layout_expand (GList *windows, WnckWindow *active, GError **error);
+G_BEGIN_DECLS
+
+void ww_layout_expand (WnckScreen *screen, GList *windows, WnckWindow *active, GError **error);
+
+G_END_DECLS
+
+#endif /* _WW_LAYOUTS_H_ */

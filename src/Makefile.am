@@ -13,24 +13,27 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-bin_PROGRAMS = winwrangler \
-	winwrangler-tray
-
-winwrangler_tray_SOURCES = \
-	ww-tray.c         \
-	winwrangler.h         \
-	ww-utils.c
-
-winwrangler_tray_LDADD = \
-	$(WINWRANGLER_LIBS)
-
-winwrangler_SOURCES = \
-	main.c       \
+winwrangler_sources = \
 	winwrangler.h       \
 	ww-layout-expand.c       \
 	ww-layouts.c       \
 	ww-layouts.h       \
 	ww-utils.c
+
+bin_PROGRAMS = winwrangler \
+	winwrangler-tray
+
+winwrangler_tray_SOURCES = \
+	$(winwrangler_sources) \
+	ww-tray.c
+
+winwrangler_tray_LDADD = \
+	$(WINWRANGLER_LIBS)
+
+winwrangler_SOURCES = \
+	$(winwrangler_sources) \
+	main.c
+	
 
 winwrangler_LDFLAGS = 
 

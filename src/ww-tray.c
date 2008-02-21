@@ -20,8 +20,8 @@
 void
 dispatch_layout_handler (GtkAction *action, gpointer data)
 {
-	gchar		*name;
-	WwLayout	*layout;
+	const gchar		*name;
+	const WwLayout	*layout;
 	
 	g_return_if_fail (GTK_IS_ACTION(action));
 	
@@ -59,15 +59,15 @@ GtkActionGroup*
 create_action_group (const WwLayout *layouts)
 {
 	GtkActionGroup  *actions;
-	GtkActionEntry	entries[];
+	GtkActionEntry	*entries;
 	guint			num_layouts;
 	
 	num_layouts = ww_get_num_layouts ();
-	actions = gtk_action_group_new ();
+	actions = gtk_action_group_new ("winwrangler-tray");
 	entries = g_new0 (GtkActionEntry, num_layouts);
 	
 	gint i;
-	for (i = 0; i < num_layouts, i++)
+	for (i = 0; i < num_layouts; i++)
 	{
 		entries[i].name = layouts[i].name;
 		entries[i].label = layouts[i].name;
@@ -81,7 +81,7 @@ create_action_group (const WwLayout *layouts)
 gchar*
 create_ui_def (const WwLayout *layouts)
 {
-	return g_strdup (WW_TRAY_UI);
+	return g_strdup ("");
 }
 
 int
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 #endif
 	
-	const WwLayouts	*layouts;
+	const WwLayout	*layouts;
 	GtkStatusIcon   *tray_icon;
 	GtkUIManager	*ui;
 	gchar			*ui_def;
@@ -112,7 +112,7 @@ main (int argc, char *argv[])
 	ui_def = create_ui_def (layouts);
 	
 	gtk_ui_manager_insert_action_group (ui, actions, 0);
-	gtk_ui_manager_add_ui_from_string (ui, WW_TRAY_UI, -1, &error);
+	gtk_ui_manager_add_ui_from_string (ui, ui_def, -1, &error);
 	
 	if (error) {
 		g_critical ("Failed to create ui: %s\n", error->message);
