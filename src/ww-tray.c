@@ -45,6 +45,7 @@ dispatch_layout_handler (GtkAction *action, gpointer data)
 	windows = ww_filter_user_windows (windows);
 	active = wnck_screen_get_active_window (screen);
 	
+	error = NULL;
 	layout->handler (screen, windows, active, &error);
 	if (error) {
 		g_critical ("Error applying layout '%s': %s", name, error->message);
@@ -94,6 +95,19 @@ create_ui_def (const WwLayout *layouts)
 					 "</ui>");
 }
 
+/* Callback for cliking tray icon */
+void
+show_popup (GtkStatusIcon *tray_icon, guint button, guint time, gpointer data)
+{
+	GtkMenu	 *menu;
+	
+	g_return_if_fail (GTK_IS_STATUS_ICON(tray_icon));
+	g_return_if_fail (GTK_IS_MENU(data));
+	
+	menu = GTK_MENU (data);
+	gtk_menu_popup (menu, NULL, NULL, NULL, NULL, button, time);
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -109,6 +123,7 @@ main (int argc, char *argv[])
 	GtkUIManager	*ui;
 	gchar			*ui_def;
 	GtkActionGroup  *actions;
+	GtkWidget		*popup;
 	GError			*error;
 	
 	gtk_init (&argc, &argv);
@@ -131,6 +146,11 @@ main (int argc, char *argv[])
 		g_error_free (error);
 		return 1;
 	}
+	
+	popup = gtk_ui_manager_get_widget (ui, "/popup");
+	g_return_val_if_fail (GTK_IS_MENU(popup), 2);
+	
+	g_signal_connect (tray_icon, "popup-menu", G_CALLBACK(show_popup), popup);;
 	
 	gtk_main();
 	
