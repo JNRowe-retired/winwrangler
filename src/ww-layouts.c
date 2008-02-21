@@ -61,3 +61,23 @@ ww_get_layout (const gchar * layout_name)
 
   return NULL;
 }
+
+/**
+ * ww_get_num_layouts
+ *
+ * Get the number of known layouts
+ *
+ * Return value: The number of known layouts
+ */
+guint
+ww_get_num_layouts (void)
+{
+	WwLayout	*layout;
+	guint		count;
+	
+	count = 0;
+	for (layout = ww_get_layouts (); layout->name != NULL; layout++)
+		count++;
+	
+	return count;
+}

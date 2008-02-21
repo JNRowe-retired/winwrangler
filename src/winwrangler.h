@@ -54,11 +54,13 @@ typedef struct
 #define WW_MOVERESIZE_FLAGS WNCK_WINDOW_CHANGE_WIDTH | WNCK_WINDOW_CHANGE_HEIGHT | WNCK_WINDOW_CHANGE_X | WNCK_WINDOW_CHANGE_Y
 
 /* Functions */
-const WwLayout*		ww_get_layouts (void);
+const WwLayout*		ww_get_layouts			(void);
 
-const WwLayout*		ww_get_layout (const gchar * layout_name);
+const WwLayout*		ww_get_layout			(const gchar * layout_name);
 
-GList*			ww_filter_user_windows (GList *windows);
+guint				ww_get_num_layouts		(void);
+
+GList*			ww_filter_user_windows		(GList *windows);
 
 G_END_DECLS
 #endif /* _WW_H_ */

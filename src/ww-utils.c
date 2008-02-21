@@ -40,6 +40,7 @@ ww_filter_user_windows (GList * windows)
 		win = WNCK_WINDOW(next->data);
 		if (!wnck_window_is_skip_tasklist (win) &&
 			!wnck_window_is_minimized (win) &&
+			!wnck_window_is_maximized (win) &&
 			!wnck_window_is_shaded (win)) {
 			result = g_list_append (result, win);
 		}
