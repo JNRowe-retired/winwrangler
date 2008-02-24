@@ -84,6 +84,7 @@ static void
 do_apply_layout (gchar * layout_name)
 {
 	WnckScreen *screen;
+	WnckWorkspace   *current_ws;
 	GList *windows;
 	WnckWindow *active;
 	const WwLayout *layout;
@@ -92,8 +93,9 @@ do_apply_layout (gchar * layout_name)
 	screen = wnck_screen_get_default ();
 	wnck_screen_force_update (screen);
 	
+	current_ws = wnck_screen_get_active_workspace (screen);
 	windows = wnck_screen_get_windows (screen);
-	windows = ww_filter_user_windows (windows);
+	windows = ww_filter_user_windows (windows, current_ws);
 	active = wnck_screen_get_active_window (screen);
 	
 	/* Check that we know the requested layout */

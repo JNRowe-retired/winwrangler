@@ -16,6 +16,7 @@ AM_CFLAGS =\
 winwrangler_sources = \
 	winwrangler.h       \
 	ww-layout-expand.c       \
+	ww-layout-tile.c       \
 	ww-layouts.c       \
 	ww-layouts.h       \
 	ww-utils.c
@@ -27,8 +28,7 @@ winwrangler_tray_SOURCES = \
 	$(winwrangler_sources) \
 	ww-tray.c
 
-winwrangler_tray_LDADD = \
-	$(WINWRANGLER_LIBS)
+winwrangler_tray_LDADD = $(WINWRANGLER_LIBS) -lm
 
 winwrangler_SOURCES = \
 	$(winwrangler_sources) \
@@ -37,6 +37,6 @@ winwrangler_SOURCES = \
 
 winwrangler_LDFLAGS = 
 
-winwrangler_LDADD = $(WINWRANGLER_LIBS)
+winwrangler_LDADD = $(WINWRANGLER_LIBS) -lm
 
 EXTRA_DIST = $(glade_DATA)

@@ -29,6 +29,7 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/window.h>
 #include <libwnck/screen.h>
+#include <libwnck/workspace.h>
 
 
 #include <glib.h>
@@ -60,7 +61,8 @@ const WwLayout*		ww_get_layout			(const gchar * layout_name);
 
 guint				ww_get_num_layouts		(void);
 
-GList*			ww_filter_user_windows		(GList *windows);
+GList*				ww_filter_user_windows		(GList *windows,
+												 WnckWorkspace *current);
 
 G_END_DECLS
 #endif /* _WW_H_ */

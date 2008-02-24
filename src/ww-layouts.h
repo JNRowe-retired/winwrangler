@@ -19,7 +19,10 @@
 
 G_BEGIN_DECLS
 
-void ww_layout_expand (WnckScreen *screen, GList *windows, WnckWindow *active, GError **error);
+#define WW_LAYOUT_IMPL(layout) void layout (WnckScreen *screen, GList *windows, WnckWindow *active, GError **error);
+
+WW_LAYOUT_IMPL(ww_layout_expand)
+WW_LAYOUT_IMPL(ww_layout_tile)
 
 G_END_DECLS
 

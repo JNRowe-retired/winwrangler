@@ -19,19 +19,23 @@
 /**
  * ww_filter_user_windows
  * @windows: List of %WnckWindow<!-- -->s to filter
+ * @current_workspace: Only use windows on this workspace. %NULL indicates
+ *                     that all windows should be used
  *
  * Extract the user controlled visible windows from a %GList of
  * %WnckWindows.
  *
  * Return value: A newly allocated list containing only windows that are 
- * not minimized, shaded, or wnck_window_skip_task_list().
+ * not minimized, shaded, or wnck_window_skip_task_list() on the current
+ * workspace.
  */
 GList*
-ww_filter_user_windows (GList * windows)
+ww_filter_user_windows (GList * windows, WnckWorkspace *current_workspace)
 {
 	GList       *next;
 	GList       *result;
 	WnckWindow  *win;
+	WnckWorkspace *win_ws;
 
 	result = NULL;    
 	
@@ -41,8 +45,15 @@ ww_filter_user_windows (GList * windows)
 		if (!wnck_window_is_skip_tasklist (win) &&
 			!wnck_window_is_minimized (win) &&
 			!wnck_window_is_maximized (win) &&
-			!wnck_window_is_shaded (win)) {
-			result = g_list_append (result, win);
+			!wnck_window_is_shaded (win))
+		{
+			win_ws = wnck_window_get_workspace (win);
+			
+			if (current_workspace == NULL ||
+				win_ws == current_workspace ||				
+				win_ws == NULL)	
+				result = g_list_append (result, win);
+				
 		}
     }
 	

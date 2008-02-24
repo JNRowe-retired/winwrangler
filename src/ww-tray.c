@@ -33,16 +33,18 @@ dispatch_layout_handler (GtkAction *action, gpointer data)
 		return;
 	}
 	
-	WnckScreen  *screen;
-	GList		*windows;
-	WnckWindow  *active;
-	GError		*error;
+	WnckScreen		*screen;
+	WnckWorkspace   *ws;
+	GList			*windows;
+	WnckWindow		*active;
+	GError			*error;
 	
 	screen = wnck_screen_get_default ();
 	wnck_screen_force_update (screen);
 	
 	windows = wnck_screen_get_windows (screen);
-	windows = ww_filter_user_windows (windows);
+	ws = wnck_screen_get_active_workspace (screen);
+	windows = ww_filter_user_windows (windows, ws);
 	active = wnck_screen_get_active_window (screen);
 	
 	error = NULL;
@@ -130,7 +132,9 @@ main (int argc, char *argv[])
 	
 	layouts = ww_get_layouts ();
 	tray_icon = gtk_status_icon_new_from_stock (GTK_STOCK_OPEN);
+	
 	gtk_status_icon_set_visible (tray_icon, TRUE);
+	gtk_status_icon_set_tooltip (tray_icon, "Perform advanced window layout");
 	
 	ui = gtk_ui_manager_new ();
 	actions = create_action_group (layouts);
