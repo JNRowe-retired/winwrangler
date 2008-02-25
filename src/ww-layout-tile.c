@@ -119,4 +119,6 @@ ww_layout_tile (WnckScreen	*screen,
 			row++;
 		}		
 	}
+	
+	g_free (dim);
 }
