@@ -1,18 +1,21 @@
 /*
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with main.c; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+ * This file is part of WinWrangler.
+ * Copyright (C) Mikkel Kamstrup Erlandsen 2008 <mikkel.kamstrup@gmail.com>
+ *
+ *  WinWrangler is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  WinWrangler is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 #include "winwrangler.h"
 
@@ -54,6 +57,57 @@ ww_filter_user_windows (GList * windows, WnckWorkspace *current_workspace)
 				win_ws == NULL)	
 				result = g_list_append (result, win);
 				
+		}
+    }
+	
+	return result;
+}
+
+/**
+ * ww_filter_strut_windows
+ * @windows: List of %WnckWindow<!-- -->s to filter
+ * @current_workspace: Only use windows on this workspace. %NULL indicates
+ *                     that all windows should be used
+ *
+ * Extract all windows that should be considered "hard edges", or windows
+ * blocking the movement of other windows from %GList of
+ * %WnckWindows. The prime example of a "strut" is a standard desktop panel.
+ *
+ * Return value: A newly allocated list containing only windows that are 
+ * not minimized, maximized, or shaded, and is wnck_window_skip_task_list() and
+ * wnck_window_is_pinned().
+ */
+GList*
+ww_filter_strut_windows (GList * windows, WnckWorkspace *current_workspace)
+{
+	GList       *next;
+	GList       *result;
+	WnckWindow  *win;
+	WnckWorkspace *win_ws;
+
+	result = NULL;    
+	
+	for (next = windows; next; next = next->next)
+	{
+		win = WNCK_WINDOW(next->data);
+		if (wnck_window_is_skip_tasklist (win) &&
+			wnck_window_is_pinned (win) &&
+			!wnck_window_is_minimized (win) &&
+			!wnck_window_is_maximized (win) &&
+			!wnck_window_is_fullscreen (win) &&
+			!wnck_window_is_shaded (win))
+		{
+			/* We don't consider the desktop a strut */
+			if (g_str_equal (wnck_window_get_name(win),
+							 "Desktop"))
+				continue;
+			
+			win_ws = wnck_window_get_workspace (win);
+			
+			if (current_workspace == NULL ||
+				win_ws == current_workspace ||				
+				win_ws == NULL)	
+				result = g_list_append (result, win);
 		}
     }
 	

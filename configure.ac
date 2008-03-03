@@ -30,7 +30,7 @@ AM_PROG_LIBTOOL
 
 
 
-PKG_CHECK_MODULES(WINWRANGLER, [libwnck-1.0 >= 2.20.1 glib-2.0 >= 2.15.6 gobject-2.0 >= 2.15.6 gtk+-2.0 >= 2.12])
+PKG_CHECK_MODULES(WINWRANGLER, [libwnck-1.0 >= 2.22 glib-2.0 >= 2.15.6 gobject-2.0 >= 2.15.6 gtk+-2.0 >= 2.12])
 AC_SUBST(WINWRANGLER_CFLAGS)
 AC_SUBST(WINWRANGLER_LIBS)
 

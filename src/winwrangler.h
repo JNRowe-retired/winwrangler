@@ -1,23 +1,20 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- * winwrangler.h
+ * This file is part of WinWrangler.
  * Copyright (C) Mikkel Kamstrup Erlandsen 2008 <mikkel.kamstrup@gmail.com>
- * 
- * winwrangler.h is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * winwrangler.h is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with callbacks.h.  If not, write to:
- * 	The Free Software Foundation, Inc.,
- * 	51 Franklin Street, Fifth Floor
- * 	Boston, MA  02110-1301, USA.
+ *
+ *  WinWrangler is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  WinWrangler is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -40,6 +37,7 @@ G_BEGIN_DECLS
 /* Function prototypes */
 typedef void (*WwLayoutHandler) (WnckScreen 	*screen,
 				 				 GList 			*windows,
+				 				 GList			*struts,
 				 				 WnckWindow		*active,
 								 GError			**error);
 
@@ -54,14 +52,19 @@ typedef struct
 /* Constants */
 #define WW_MOVERESIZE_FLAGS WNCK_WINDOW_CHANGE_WIDTH | WNCK_WINDOW_CHANGE_HEIGHT | WNCK_WINDOW_CHANGE_X | WNCK_WINDOW_CHANGE_Y
 
-/* Functions */
+/* Functions implemented in ww-layouts.c */
 const WwLayout*		ww_get_layouts			(void);
 
 const WwLayout*		ww_get_layout			(const gchar * layout_name);
 
 guint				ww_get_num_layouts		(void);
 
+
+/* Functions in ww-utils.c */
 GList*				ww_filter_user_windows		(GList *windows,
+												 WnckWorkspace *current);
+
+GList*				ww_filter_strut_windows		(GList *windows,
 												 WnckWorkspace *current);
 
 G_END_DECLS

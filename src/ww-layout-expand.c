@@ -2,25 +2,23 @@
    -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- 
  */
 /*
- * ww-layout-expand.c (winwrangler)
+ * This file is part of WinWrangler.
  * Copyright (C) Mikkel Kamstrup Erlandsen 2008 <mikkel.kamstrup@gmail.com>
- * 
- * ww-layout-expand.c is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * ww-layout-expand.c is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with callbacks.c.  If not, write to:
- *      The Free Software Foundation, Inc.,
- *      51 Franklin Street, Fifth Floor
- *      Boston, MA  02110-1301, USA.
+ *
+ *  WinWrangler is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  WinWrangler is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
@@ -41,6 +39,7 @@
 void
 ww_layout_expand (WnckScreen	*screen,
 				  GList			*windows,
+				  GList			*struts,
 				  WnckWindow	*active,
 				  GError		**error)
 {
@@ -49,7 +48,10 @@ ww_layout_expand (WnckScreen	*screen,
 	int x, y, w, h;				/* coords of active */
 	int wx, wy, ww, wh;			/* coords of window(s) to compare to */
 	int bx, by, br, bb;			/* coord bounds x, y, top, bottom */
-
+	
+	/* We can ignore the struts because the window manager should make
+	 * sure we don't expand over them
+	 */
 
 	wnck_window_get_geometry (active, &x, &y, &w, &h);
 	bx = 0;
@@ -90,7 +92,7 @@ ww_layout_expand (WnckScreen	*screen,
 	
 	g_debug ("Expanding window to (%d, %d) @ %dx%d", bx, by, br - bx, bb - by);
 	
-	wnck_window_set_geometry (active, WNCK_WINDOW_GRAVITY_CURRENT,
+	wnck_window_set_geometry (active, WNCK_WINDOW_GRAVITY_STATIC,
 							  WW_MOVERESIZE_FLAGS, 
 							  bx, by, br - bx, bb - by);
 }

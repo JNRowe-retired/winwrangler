@@ -1,24 +1,22 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- * main.c (winwrangler)
+ * This file is part of WinWrangler.
  * Copyright (C) Mikkel Kamstrup Erlandsen 2008 <mikkel.kamstrup@gmail.com>
- * 
- * main.c is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * main.c is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with main.c.  If not, write to:
-	 * 	The Free Software Foundation, Inc.,
- * 	51 Franklin Street, Fifth Floor
- * 	Boston, MA  02110-1301, USA.
+ *
+ *  WinWrangler is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  WinWrangler is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -85,7 +83,7 @@ do_apply_layout (gchar * layout_name)
 {
 	WnckScreen *screen;
 	WnckWorkspace   *current_ws;
-	GList *windows;
+	GList *windows, *struts;
 	WnckWindow *active;
 	const WwLayout *layout;
 	GError *error;
@@ -95,6 +93,7 @@ do_apply_layout (gchar * layout_name)
 	
 	current_ws = wnck_screen_get_active_workspace (screen);
 	windows = wnck_screen_get_windows (screen);
+	struts = ww_filter_strut_windows (windows, current_ws);
 	windows = ww_filter_user_windows (windows, current_ws);
 	active = wnck_screen_get_active_window (screen);
 	
@@ -109,8 +108,9 @@ do_apply_layout (gchar * layout_name)
 	
 	/* Apply the layout */
 	error = NULL;
-	layout->handler (screen, windows, active, &error);
+	layout->handler (screen, windows, struts, active, &error);
 	g_list_free (windows);
+	g_list_free (struts);
 	
 	if (error)
 	{
@@ -118,9 +118,7 @@ do_apply_layout (gchar * layout_name)
 					layout_name, error->message);
 		g_error_free (error);
 		return;
-	}
-	
-	gtk_main();	
+	}	
 }
 
 int
