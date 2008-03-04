@@ -9,7 +9,8 @@ winwranglerdoc_DATA = \
 	COPYING\
 	AUTHORS\
 	INSTALL\
-	NEWS
+	NEWS \
+	HACKING
 
 EXTRA_DIST = $(winwranglerdoc_DATA)
 

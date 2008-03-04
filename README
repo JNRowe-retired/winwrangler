@@ -1,5 +1,12 @@
 README for WinWrangler
 ----------------------
 
-WinWrangler is copyright Mikkel Kamstrup Erlandsen 2008. The source code
-is released under the GNU LGPL
+WinWrangler is copyright Mikkel Kamstrup Erlandsen 2008,
+                         <mikkel.kamstrup@gmail.com>
+
+The source code is licensed under the GNU LGPL version 3. Make sure you have
+read the COPYING file which should be distributed with the project.
+
+WinWrangler is a simple project whose aim is to add additional functionality
+to all standards compliant window managers. This means that it should work
+under Gnome, KDE and XFCE.

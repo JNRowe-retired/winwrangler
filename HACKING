@@ -1,0 +1,23 @@
+HACKING WinWrangler
+-------------------
+
+Design Ideas:
+Ww is very much a KIS (Keep It Simple) project. While it is tempting to
+add a daemon with a dbus interface (or simple socket protocol) to trigger
+the available layouts, this should not be done. Ww should be kept minimal.
+
+While we should keep the code base simple individual layout (see Terminology 
+below) implementations can be however complex they like.
+
+We stick to the EWMH (Extended Window Manager Hints) standard to ensure maximum
+compatibility among platforms. To this end libwnck is used over direct X
+communications.
+
+Code Terminology:
+A 'layout' is a function that performs the actual laying out of windows.
+
+
+Adding a New Layout:
+Implement a WwLayoutHandler as defined in winwrangler.h and add a declaration
+in ww-layouts.h and a description in ww-layouts.c. Each layout should be
+in a separate file called ww-layout-<name>.c.
