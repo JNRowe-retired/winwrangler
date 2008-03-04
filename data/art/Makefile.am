@@ -10,6 +10,12 @@ art_DATA = winwrangler.png
 22icondir = $(datadir)/icons/hicolor/22x22/apps
 22icon_DATA = 22x22/winwrangler.png
 
+32icondir = $(datadir)/icons/hicolor/32x32/apps
+32icon_DATA = 32x32/winwrangler.png
+
+scalableicondir = $(datadir)/icons/hicolor/scalable/apps
+scalableicon_DATA = scalable/winwrangler.svg
+
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
 install-data-hook: update-icon-cache
@@ -26,4 +32,6 @@ update-icon-cache:
 EXTRA_DIST = \
 	$(art_DATA) \
 	$(16icon_DATA) \
-	$(22icon_DATA)
+	$(22icon_DATA) \
+	$(32icon_DATA) \
+	$(scalableicon_DATA)
