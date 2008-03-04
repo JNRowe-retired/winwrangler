@@ -156,6 +156,10 @@ ww_layout_tile (WnckScreen	*screen,
 	int		cell_w, cell_h;
 	int		edge_l, edge_t, edge_r, edge_b;
 	
+	g_return_if_fail (WNCK_IS_SCREEN(screen));
+	if (g_list_length(windows) == 0)
+		return;
+	
 	dim = get_grid_size (windows);
 	
 	calculate_bounds (screen, struts, &edge_l, &edge_t, &edge_r, &edge_b);
