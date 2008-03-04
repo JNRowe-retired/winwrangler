@@ -139,7 +139,7 @@ main (int argc, char *argv[])
 	gtk_init (&argc, &argv);
 	
 	layouts = ww_get_layouts ();
-	tray_icon = gtk_status_icon_new_from_stock (GTK_STOCK_OPEN);
+	tray_icon = gtk_status_icon_new_from_icon_name ("winwrangler");
 	
 	gtk_status_icon_set_visible (tray_icon, TRUE);
 	gtk_status_icon_set_tooltip (tray_icon, "Perform advanced window layout");
