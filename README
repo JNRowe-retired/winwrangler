@@ -10,3 +10,10 @@ read the COPYING file which should be distributed with the project.
 WinWrangler is a simple project whose aim is to add additional functionality
 to all standards compliant window managers. This means that it should work
 under Gnome, KDE and XFCE.
+
+Honorable Mentions
+------------------
+
+ * The WinWrangler icons are based on the Tango window icon
+ * Vincent Untz, Elijah Newren, and Thomas Thurman for being responsive and
+   helpful in sorting out bugs in Metacity and libwnck

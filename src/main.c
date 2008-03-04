@@ -53,13 +53,19 @@
 #include "winwrangler.h"
 
 static gchar *layout_name = NULL;
-static gboolean *print_layouts = FALSE;
+static gboolean print_layouts = FALSE;
+static gboolean run_tray = FALSE;
+static gboolean run_daemon = FALSE;
 
 static GOptionEntry option_entries[] = {
 	{"layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name,
 	 "The layout function to apply"},
 	{"layouts", 0, 0, G_OPTION_ARG_NONE, &print_layouts,
 	 "Print a list of layout functions"},
+	{"tray", 't', 0, G_OPTION_ARG_NONE, &run_tray,
+	 "Add an icon in the system tray. This implies --daemon"},
+	{"daemon", 'd', 0, G_OPTION_ARG_NONE, &run_daemon,
+	 "Run a background process listening for hotkey events"},
 	{NULL}
 };
 
@@ -124,9 +130,10 @@ do_apply_layout (gchar * layout_name)
 int
 main (int argc, char *argv[])
 {
-	const WwLayout *layouts;
-	GError *error;
-	GOptionContext *options;
+	const WwLayout  *layouts;
+	GError			*error;
+	GOptionContext  *options;
+	GtkStatusIcon		*tray_icon;
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -153,19 +160,35 @@ main (int argc, char *argv[])
 	if (print_layouts)
 	{
 		do_print_layouts (layouts);
-		return 0;
 	}
 	else if (layout_name)
 	{
 		do_apply_layout (layout_name);
-		return 0;
 	}
 	
-	else
+	if (run_tray) {
+		run_daemon = TRUE;
+		tray_icon = ww_tray_icon_new ();
+		g_debug ("BAAZ");
+		g_object_unref (tray_icon);
+		g_debug ("DOOP");
+	}
+	
+	if (run_daemon) {
+		/* FIXME: Create keybinder */
+		gtk_main();
+	}
+	
+	else if (!layout_name &&
+			 !print_layouts &&
+			 !run_daemon &&
+			 !run_tray)
 	{
 		gchar *help_msg = g_option_context_get_help (options, TRUE, NULL);
 		g_printf (help_msg);
 		g_free (help_msg);
-		return 0;
+		return 1;
 	}
+	
+	return 0;
 }

@@ -2,7 +2,6 @@
 
 ## Created by Anjuta
 
-gladedir = $(datadir)/winwrangler/glade
 INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
@@ -13,30 +12,21 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-winwrangler_sources = \
-	winwrangler.h       \
-	ww-layout-expand.c       \
-	ww-layout-tile.c       \
-	ww-layouts.c       \
-	ww-layouts.h       \
-	ww-utils.c
-
-bin_PROGRAMS = winwrangler \
-	winwrangler-tray
-
-winwrangler_tray_SOURCES = \
-	$(winwrangler_sources) \
-	ww-tray.c
-
-winwrangler_tray_LDADD = $(WINWRANGLER_LIBS) -lm
+bin_PROGRAMS = winwrangler
 
 winwrangler_SOURCES = \
-	$(winwrangler_sources) \
-	main.c
-	
+	winwrangler.h	   \
+	ww-layout-expand.c  \
+	ww-layout-tile.c	\
+	ww-layouts.c		\
+	ww-layouts.h		\
+	ww-utils.c			\
+	main.c				\
+	ww-tray.h			\
+	ww-tray.c
 
 winwrangler_LDFLAGS = 
 
 winwrangler_LDADD = $(WINWRANGLER_LIBS) -lm
 
-EXTRA_DIST = $(glade_DATA)
+EXTRA_DIST = 
