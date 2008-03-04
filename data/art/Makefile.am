@@ -2,8 +2,7 @@
 # Images and icon
 # ******************************************************************************
 artdir = $(pkgdatadir)/art
-art_DATA = \
-	winwrangler.png
+art_DATA = winwrangler.png
 
 16icondir = $(datadir)/icons/hicolor/16x16/apps
 16icon_DATA = 16x16/winwrangler.png
@@ -24,7 +23,7 @@ update-icon-cache:
 		echo "***   $(gtk_update_icon_cache)"; \
 	fi
 
-EXTRA_DIST = 
+EXTRA_DIST = \
 	$(art_DATA) \
 	$(16icon_DATA) \
 	$(22icon_DATA)
