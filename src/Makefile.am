@@ -1,11 +1,8 @@
-## Process this file with automake to produce Makefile.in
-
-## Created by Anjuta
-
 INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+	-DG_LOG_DOMAIN=\"WinWrangler\" \
 	$(WINWRANGLER_CFLAGS)
 
 AM_CFLAGS =\
@@ -15,15 +12,15 @@ AM_CFLAGS =\
 bin_PROGRAMS = winwrangler
 
 winwrangler_SOURCES = \
-	winwrangler.h	   \
-	ww-layout-expand.c  \
+	winwrangler.h		\
+	ww-hotkeys.c		\
+	ww-layout-expand.c	\
 	ww-layout-tile.c	\
 	ww-layouts.c		\
 	ww-layouts.h		\
-	ww-utils.c			\
-	main.c				\
-	ww-tray.h			\
-	ww-tray.c
+	ww-utils.c		\	
+	ww-tray.c		\
+	main.c
 
 winwrangler_LDFLAGS = 
 

@@ -70,7 +70,7 @@ static GOptionEntry option_entries[] = {
 };
 
 static void
-do_print_layouts (const WwLayout * layouts)
+do_print_layouts (const WwLayout *layouts)
 {
 	WwLayout *layout;
 	
@@ -84,47 +84,19 @@ do_print_layouts (const WwLayout * layouts)
 	}
 }
 
-static void
-do_apply_layout (gchar * layout_name)
+void
+do_bind_keys (void)
 {
-	WnckScreen *screen;
-	WnckWorkspace   *current_ws;
-	GList *windows, *struts;
-	WnckWindow *active;
-	const WwLayout *layout;
-	GError *error;
+	WwLayout *iter, *layouts;
 	
-	screen = wnck_screen_get_default ();
-	wnck_screen_force_update (screen);
+	layouts = ww_get_layouts ();
 	
-	current_ws = wnck_screen_get_active_workspace (screen);
-	windows = wnck_screen_get_windows (screen);
-	struts = ww_filter_strut_windows (windows, current_ws);
-	windows = ww_filter_user_windows (windows, current_ws);
-	active = wnck_screen_get_active_window (screen);
-	
-	/* Check that we know the requested layout */
-	layout = ww_get_layout (layout_name);
-	if (!layout)
+	for (iter = layouts; iter->name != NULL; iter++)
 	{
-		g_printerr ("No such layout: '%s'. Try running with --layouts to "
-					"list possible layouts\n", layout_name);
-		return;
+		g_printf ("Bind %s %s\n", iter->name, iter->default_hotkey);
+		ww_hotkey_bind_layout (iter);
 	}
 	
-	/* Apply the layout */
-	error = NULL;
-	layout->handler (screen, windows, struts, active, &error);
-	g_list_free (windows);
-	g_list_free (struts);
-	
-	if (error)
-	{
-		g_printerr ("Failed to apply layout '%s'. Error was:\n%s",
-					layout_name, error->message);
-		g_error_free (error);
-		return;
-	}	
 }
 
 int
@@ -133,7 +105,7 @@ main (int argc, char *argv[])
 	const WwLayout  *layouts;
 	GError			*error;
 	GOptionContext  *options;
-	GtkStatusIcon		*tray_icon;
+	GtkStatusIcon	*tray_icon;
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -163,19 +135,16 @@ main (int argc, char *argv[])
 	}
 	else if (layout_name)
 	{
-		do_apply_layout (layout_name);
+		ww_apply_layout_by_name (layout_name);
 	}
 	
 	if (run_tray) {
 		run_daemon = TRUE;
 		tray_icon = ww_tray_icon_new ();
-		g_debug ("BAAZ");
-		g_object_unref (tray_icon);
-		g_debug ("DOOP");
 	}
 	
 	if (run_daemon) {
-		/* FIXME: Create keybinder */
+		do_bind_keys();
 		gtk_main();
 	}
 	

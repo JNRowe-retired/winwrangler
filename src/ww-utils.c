@@ -113,3 +113,53 @@ ww_filter_strut_windows (GList * windows, WnckWorkspace *current_workspace)
 	
 	return result;
 }
+
+/**
+ * ww_apply_layout_by_name
+ * @layout_name: The name of the layout to apply
+ *
+ * Apply a given layout to the default screen by looking up the relevant
+ * #WwLayout based on its name.
+ */
+void
+ww_apply_layout_by_name (const gchar * layout_name)
+{
+	WnckScreen *screen;
+	WnckWorkspace   *current_ws;
+	GList *windows, *struts;
+	WnckWindow *active;
+	const WwLayout *layout;
+	GError *error;
+	
+	screen = wnck_screen_get_default ();
+	wnck_screen_force_update (screen);
+	
+	current_ws = wnck_screen_get_active_workspace (screen);
+	windows = wnck_screen_get_windows (screen);
+	struts = ww_filter_strut_windows (windows, current_ws);
+	windows = ww_filter_user_windows (windows, current_ws);
+	active = wnck_screen_get_active_window (screen);
+	
+	/* Check that we know the requested layout */
+	layout = ww_get_layout (layout_name);
+	if (!layout)
+	{
+		g_printerr ("No such layout: '%s'. Try running with --layouts to "
+					"list possible layouts\n", layout_name);
+		return;
+	}
+	
+	/* Apply the layout */
+	error = NULL;
+	layout->handler (screen, windows, struts, active, &error);
+	g_list_free (windows);
+	g_list_free (struts);
+	
+	if (error)
+	{
+		g_printerr ("Failed to apply layout '%s'. Error was:\n%s",
+					layout_name, error->message);
+		g_error_free (error);
+		return;
+	}	
+}

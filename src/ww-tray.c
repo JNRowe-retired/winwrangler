@@ -26,7 +26,7 @@ static GtkWidget *popup = NULL;
 static void
 dispatch_layout_handler (GtkAction *action, gpointer data)
 {
-	const gchar		*name;
+	const gchar	*name;
 	const WwLayout	*layout;
 	
 	g_return_if_fail (GTK_IS_ACTION(action));
@@ -154,9 +154,9 @@ ww_tray_icon_new ()
 	const WwLayout	*layouts;
 	GtkStatusIcon   *tray_icon;
 	GtkUIManager	*ui;
-	gchar			*ui_def;
+	gchar		*ui_def;
 	GtkActionGroup  *actions;
-	GError			*error;
+	GError		*error;
 	
 	if (popup) {
 		g_critical ("Global popup for tray icon already set. Ww only supports"

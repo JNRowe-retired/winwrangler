@@ -28,7 +28,6 @@
 #include <libwnck/screen.h>
 #include <libwnck/workspace.h>
 
-
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -46,7 +45,8 @@ typedef struct
 {
   const gchar *name;
   const gchar *desc;
-  WwLayoutHandler handler;
+  const gchar *default_hotkey;
+  WwLayoutHandler handler;  
 } WwLayout;
 
 /* Constants */
@@ -55,7 +55,7 @@ typedef struct
 /* Functions implemented in ww-layouts.c */
 const WwLayout*		ww_get_layouts			(void);
 
-const WwLayout*		ww_get_layout			(const gchar * layout_name);
+const WwLayout*		ww_get_layout			(const gchar *layout_name);
 
 guint				ww_get_num_layouts		(void);
 
@@ -66,6 +66,12 @@ GList*				ww_filter_user_windows		(GList *windows,
 
 GList*				ww_filter_strut_windows		(GList *windows,
 												 WnckWorkspace *current);
+
+GtkStatusIcon*		ww_tray_icon_new			(void);
+
+gboolean			ww_hotkey_bind_layout		(WwLayout *layout);
+
+void				ww_apply_layout_by_name		(const gchar *layout_name);
 
 G_END_DECLS
 #endif /* _WW_H_ */
