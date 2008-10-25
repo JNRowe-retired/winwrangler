@@ -66,6 +66,9 @@ ww_hotkey_bind_layout (WwLayout *layout)
 					      layout->name,
 					      layout->default_hotkey,
 					      NULL);
+		gtk_hotkey_info_set_description (hotkey,
+						 layout->desc);
+		
 		if (hotkey == NULL) {
 			g_critical ("Error creating hotkey %s for '%s'",
 				    layout->default_hotkey,
