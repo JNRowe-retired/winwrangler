@@ -25,6 +25,9 @@
 static void
 on_hotkey_activated (GtkHotkeyInfo *hotkey, guint event_time, WwLayout *layout)
 {
+	g_message ("Hotkey %s for '%s' activated",
+		 gtk_hotkey_info_get_signature (hotkey),
+		 layout->name);
 	ww_apply_layout_by_name (layout->name);
 }
 

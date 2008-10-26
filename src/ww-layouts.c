@@ -24,11 +24,11 @@ static WwLayout layouts[] = {
 	{"expand",
 	 "Expand the currently active window to fill all available space "
 	 "without overlapping any new windows",
-	 "<Super>1",
+	 "<Ctrl><Super>1",
 	 ww_layout_expand},
 	{"tile",
 	 "Tile all visible windows",
-	 "<Super>2",
+	 "<Ctrl><Super>2",
 	 ww_layout_tile},
 	{NULL}
 };
