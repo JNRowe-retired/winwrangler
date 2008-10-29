@@ -12,7 +12,16 @@ winwranglerdoc_DATA = \
 	NEWS \
 	HACKING
 
-EXTRA_DIST = $(winwranglerdoc_DATA)
+EXTRA_DIST = \
+	intltool-extract.in \
+	intltool-merge.in   \
+	intltool-update.in  \
+	$(winwranglerdoc_DATA)
+
+DISTCLEANFILES = \
+	intltool-extract \
+	intltool-merge \
+	intltool-update
 
 # Copy all the spec files. Of cource, only one is actually used.
 dist-hook:
