@@ -1,0 +1,23 @@
+Source: winwrangler
+Section: bin
+Priority: optional
+Maintainer: Mikkel Kamstrup Erlandsen <mikkel.kamstrup@gmail.com>
+Build-Depends: cdbs,
+               debhelper (>= 5),
+               libglib2.0-dev (>= 2.16),
+               libgtk2.0-dev (>= 2.12),
+               libgtkhotkey-dev (>= 0.2)
+Standards-Version: 3.7.3
+
+Package: winwrangler
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         libgtkhotkey1
+Description: Small desktop daemon to perform advanced window
+ manipulations not commonly found in window managers.
+ .
+ This package contains support for the 'tile' and 'expand' actions.
+ .
+ Disclaimer: This package is based on a very early release of WinWrangler and
+ should not be considered production ready by a long shot.
