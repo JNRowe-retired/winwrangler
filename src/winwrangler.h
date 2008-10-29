@@ -44,6 +44,7 @@ typedef void (*WwLayoutHandler) (WnckScreen 	*screen,
 typedef struct
 {
   const gchar *name;
+  const gchar *label;
   const gchar *desc;
   const gchar *default_hotkey;
   WwLayoutHandler handler;  
