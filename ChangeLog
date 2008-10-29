@@ -1,5 +1,46 @@
 
 2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* README
+	  Clarify the purpose of WinWrangler in the README
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* NEWS
+	  Initial fill-in of NEWS
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* Makefile.am
+	* debian/control
+	* src/Makefile.am
+	  Fix distclean breakage after debian files where included
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* debian/
+	* debian/changelog
+	* debian/compat
+	* debian/control
+	* debian/copyright
+	* debian/rules
+	  Initial stab at debianization
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* aclocal.m4
+	* Makefile.am
+	  Release 0.1
+	  
+	  Fix some distcheck issues
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* po/ChangeLog
+	* ChangeLog
+	  Add files to make distcheck happy
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
 	* configure.ac
 	* src/winwrangler.h
 	* src/ww-layouts.c
