@@ -1,0 +1,276 @@
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* configure.ac
+	* src/winwrangler.h
+	* src/ww-layouts.c
+	* src/ww-tray.c
+	  Add labels to layouts
+	
+
+2008-10-26  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-hotkeys.c
+	* src/ww-layouts.c
+	  Chnage default hotkey modifiers to <Ctrl><Super> to avoid Compiz collisions (with zooming shortcuts)
+	
+
+2008-10-26  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-hotkeys.c
+	  Also store the hotkey description with the hotkeys
+	
+
+2008-10-26  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-hotkeys.c
+	* aclocal.m4
+	* configure.ac
+	* data/art/scalable/winwrangler.svg
+	* po/Makefile.in.in
+	* src/Makefile.am
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-layouts.c
+	* src/ww-tray.c
+	* src/ww-utils.c
+	  Enable hotkey monitoring using GtkHotkey
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* AUTHORS
+	* README
+	* src/Makefile.am
+	* src/main.c
+	* src/ww-tray.c
+	  Remove stand alone app winwrangler-tray and make it a switch to the winwrangler executable instead
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* HACKING
+	* Makefile.am
+	* README
+	  Update README
+	  
+	  Add HACKING file
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* data/art/32x32/winwrangler.png
+	* data/art/scalable/winwrangler.svg
+	* data/art/Makefile.am
+	  add 32x32 and scalable icons
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* data/art/Makefile.am
+	  Make icons install properly
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* data/
+	* data/Makefile.am
+	* data/art/
+	* data/art/16x16/
+	* data/art/16x16/winwrangler.png
+	* data/art/22x22/
+	* data/art/22x22/winwrangler.png
+	* data/art/32x32/
+	* data/art/Makefile.am
+	* data/art/scalable/
+	* data/art/winwrangler.png
+	* Makefile.am
+	* configure.ac
+	* src/ww-tray.c
+	  Add icon files
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-layout-tile.c
+	  Fix crasher in tile layout if no user windows where present
+	
+
+2008-03-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* README
+	* configure.ac
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-layout-expand.c
+	* src/ww-layout-tile.c
+	* src/ww-layouts.c
+	* src/ww-layouts.h
+	* src/ww-tray.c
+	* src/ww-utils.c
+	  Rewrite tile layout to take struts (panels and such) into account.
+	  
+	  Fix segfault in -tray
+	kind changed:
+	  COPYING (symlink => file)
+	
+
+2008-02-25  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-layout-tile.c
+	  Fix leak of dimensions-array
+	
+
+2008-02-24  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-layout-tile.c
+	* src/Makefile.am
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-layouts.c
+	* src/ww-layouts.h
+	* src/ww-tray.c
+	* src/ww-utils.c
+	  "Tile" layout now basically working. *Basically*.
+	
+
+2008-02-21  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/main.c
+	* src/ww-tray.c
+	  Tray icon "working"
+	
+
+2008-02-21  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-tray.c
+	  memory clean ups
+	
+
+2008-02-21  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-tray.c
+	  Bits and pieces
+	
+
+2008-02-21  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/Makefile.am
+	* src/ww-layouts.h
+	* src/ww-tray.c
+	  Make code compilable
+	
+
+2008-02-21  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-tray.c
+	* src/Makefile.am
+	* src/winwrangler.h
+	* src/ww-layouts.c
+	* src/ww-utils.c
+	  Lots of work towards winwrangler-tray. DOESN'T COMPILE!
+	
+
+2008-02-21  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-utils.c
+	* src/Makefile.am
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-layout-expand.c
+	* src/ww-layouts.c
+	  Semi-working expand. It has very rough edges, but works to some extent.
+	
+
+2008-02-20  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-layout-expand.c
+	  Change signature of WwLayoutHandler to take a WnckScreen as first arg
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/main.c
+	  Print help message as default
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-layouts.h
+	* src/main.c
+	  Add file I missed (ww-lauouts.h)
+	  
+	  Code cleanups in main.c
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/Makefile.am
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-layout-expand.c
+	* src/ww-layouts.c
+	  Base app now working. Still now window handling, but we are ready for that now.
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-layouts.c
+	* src/Makefile.am
+	* src/winwrangler.h
+	  Start foundations of actual code
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* configure.ac
+	* src/main.c
+	* src/winwrangler.h
+	  Define WwLayoutHandler signature
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* TODO.tasks
+	* src/callbacks.c
+	* src/ww-layout-expand.c
+	* src/callbacks.h
+	* src/winwrangler.h
+	* Makefile.am
+	* configure.ac
+	* src/Makefile.am
+	* src/main.c
+	* src/ww-layout-expand.c
+	* src/winwrangler.h
+	  More project setup
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* po/.cvsignore
+	* po/ChangeLog
+	* po/Makefile
+	* po/Makefile.in
+	* po/POTFILES
+	* po/stamp-it
+	* src/.cvsignore
+	* src/.deps/
+	* src/.deps/callbacks.Po
+	* src/.deps/main.Po
+	* src/Makefile
+	* src/Makefile.in
+	* src/winwrangler.glade
+	  Remove obsoletel files
+	
+
+2008-02-19  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* AUTHORS
+	* COPYING@
+	* ChangeLog
+	* INSTALL@
+	* Makefile.am
+	* NEWS
+	* README
+	* aclocal.m4
+	* autogen.sh
+	* configure.ac
+	* po/
+	* po/.cvsignore
+	* po/ChangeLog
+	* po/LINGUAS
+	* po/Makefile
+	* po/Makefile.in
+	* po/Makefile.in.in
+	* po/POTFILES
+	* po/POTFILES.in
+	* po/stamp-it
+	* src/
+	* src/.cvsignore
+	* src/.deps/
+	* src/.deps/callbacks.Po
+	* src/.deps/main.Po
+	* src/Makefile
+	* src/Makefile.am
+	* src/Makefile.in
+	* src/callbacks.c
+	* src/callbacks.h
+	* src/main.c
+	* src/winwrangler.glade
+	* winwrangler.anjuta
+	  Initial imports
+	
