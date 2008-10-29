@@ -1,21 +1,27 @@
-## Process this file with automake to produce Makefile.in
-## Created by Anjuta
-
 SUBDIRS = src po data
 
 winwranglerdocdir = ${prefix}/doc/winwrangler
 winwranglerdoc_DATA = \
-	README\
-	COPYING\
-	AUTHORS\
-	INSTALL\
-	NEWS \
+	README		\
+	COPYING		\
+	AUTHORS		\
+	INSTALL		\
+	NEWS		\
 	HACKING
 
+debian_dist = \
+	debian/changelog	\
+	debian/compat		\
+	debian/control		\
+	debian/copyright	\
+	debian/rules
+
+
 EXTRA_DIST = \
-	intltool-extract.in \
-	intltool-merge.in   \
-	intltool-update.in  \
+	intltool-extract.in 	\
+	intltool-merge.in   	\
+	intltool-update.in  	\
+	$(debian_dist)			\
 	$(winwranglerdoc_DATA)
 
 DISTCLEANFILES = \

@@ -1,5 +1,5 @@
 Source: winwrangler
-Section: bin
+Section: gnome
 Priority: optional
 Maintainer: Mikkel Kamstrup Erlandsen <mikkel.kamstrup@gmail.com>
 Build-Depends: cdbs,

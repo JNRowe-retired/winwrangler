@@ -18,7 +18,7 @@ winwrangler_SOURCES = \
 	ww-layout-tile.c	\
 	ww-layouts.c		\
 	ww-layouts.h		\
-	ww-utils.c		\	
+	ww-utils.c		\
 	ww-tray.c		\
 	main.c
 
