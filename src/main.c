@@ -18,12 +18,7 @@
  */
 
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-
+#include <glib.h>
 #include <glib/gi18n.h>
 
 #include "winwrangler.h"
