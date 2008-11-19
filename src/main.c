@@ -58,15 +58,15 @@ static gboolean run_tray = FALSE;
 static gboolean run_daemon = FALSE;
 
 static GOptionEntry option_entries[] = {
-	{"layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name,
-	 "The layout function to apply"},
-	{"layouts", 0, 0, G_OPTION_ARG_NONE, &print_layouts,
-	 "Print a list of layout functions"},
-	{"tray", 't', 0, G_OPTION_ARG_NONE, &run_tray,
-	 "Add an icon in the system tray. This implies --daemon"},
-	{"daemon", 'd', 0, G_OPTION_ARG_NONE, &run_daemon,
-	 "Run a background process listening for hotkey events"},
-	{NULL}
+	{ "layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name,
+	  N_("The layout function to apply") },
+	{ "layouts", 0, 0, G_OPTION_ARG_NONE, &print_layouts,
+	  N_("Print a list of layout functions") },
+	{ "tray", 't', 0, G_OPTION_ARG_NONE, &run_tray,
+	  N_("Add an icon in the system tray. This implies --daemon") },
+	{ "daemon", 'd', 0, G_OPTION_ARG_NONE, &run_daemon,
+	  N_("Run a background process listening for hotkey events") },
+	{ NULL }
 };
 
 static void
