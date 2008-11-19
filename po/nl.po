@@ -1,0 +1,33 @@
+# Dutch translation for WinWrangler
+#
+# This file is distributed under the same license as the winwrangler package.
+#
+# Wouter Bolsterlee <wbolster@gnome.org>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WinWrangler\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-19 16:40+0100\n"
+"PO-Revision-Date: 2008-11-19 16:41+0100\n"
+"Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/main.c:62
+msgid "The layout function to apply"
+msgstr "De toe te passen layout-functie"
+
+#: ../src/main.c:64
+msgid "Print a list of layout functions"
+msgstr "Een lijst van layout-functies tonen"
+
+#: ../src/main.c:66
+msgid "Add an icon in the system tray. This implies --daemon"
+msgstr "Een pictogram in het mededelingengebied plaatsen (impliceert ‘--daemon’)"
+
+#: ../src/main.c:68
+msgid "Run a background process listening for hotkey events"
+msgstr "In de achtergrond op sneltoetsen reageren"
