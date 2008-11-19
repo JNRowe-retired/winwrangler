@@ -63,11 +63,7 @@ do_bind_keys (void)
 	layouts = ww_get_layouts ();
 	
 	for (iter = layouts; iter->name != NULL; iter++)
-	{
-		g_printf ("Bind %s %s\n", iter->name, iter->default_hotkey);
 		ww_hotkey_bind_layout (iter);
-	}
-	
 }
 
 int
@@ -125,7 +121,7 @@ main (int argc, char *argv[])
 			 !run_tray)
 	{
 		gchar *help_msg = g_option_context_get_help (options, TRUE, NULL);
-		g_printf (help_msg);
+		g_print (help_msg);
 		g_free (help_msg);
 		return 1;
 	}
