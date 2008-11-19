@@ -51,7 +51,7 @@ do_print_layouts (const WwLayout *layouts)
 	for (layout = layouts; layout->name != NULL; layout++)
 	{
 		g_return_if_fail (layout != NULL);
-		g_print (" - %- 15s %s\n", layout->name, layout->desc);
+		g_print (" - %-15s %s\n", layout->name, layout->desc);
 	}
 }
 
