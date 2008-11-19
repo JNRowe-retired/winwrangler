@@ -101,7 +101,7 @@ main (int argc, char *argv[])
 	error = NULL;
 	if (!g_option_context_parse (options, &argc, &argv, &error))
 	{
-		g_print ("Bad command line: %s\n", error->message);
+		g_printerr (_("Invalid command line: %s\n"), error->message);
 		return 1;
 	}
 	
