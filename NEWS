@@ -3,11 +3,8 @@
 
 Release date: 2008-10-29
 
- * Initial release
-
+Features:
  * Support for 'tile': Tile all visible windows
-
  * Support for 'expand': Expand the currently active window to fill all 
    available space without overlapping any new windows
-
  * Global hotkeys via the GtkHotkey library (min. version 0.2)
