@@ -1,0 +1,6 @@
+po/Makefile
+po/Makefile.in
+po/Makefile.in.in
+po/POTFILES
+po/stamp-it
+po/winwrangler.pot
