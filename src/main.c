@@ -14,41 +14,12 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with WinWranger.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-
-
-
-/*
- * Standard gettext macros.
- */
-#ifdef ENABLE_NLS
-#  include <libintl.h>
-#  undef _
-#  define _(String) dgettext (PACKAGE, String)
-#  ifdef gettext_noop
-#    define N_(String) gettext_noop (String)
-#  else
-#    define N_(String) (String)
-#  endif
-#else
-#  define textdomain(String) (String)
-#  define gettext(String) (String)
-#  define dgettext(Domain,Message) (Message)
-#  define dcgettext(Domain,Message,Type) (Message)
-#  define bindtextdomain(Domain,Directory) (Domain)
-#  define _(String) (String)
-#  define N_(String) (String)
-#endif
-
-
+#include <glib.h>
+#include <glib/gi18n.h>
 
 #include "winwrangler.h"
 
@@ -58,15 +29,15 @@ static gboolean run_tray = FALSE;
 static gboolean run_daemon = FALSE;
 
 static GOptionEntry option_entries[] = {
-	{"layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name,
-	 "The layout function to apply"},
-	{"layouts", 0, 0, G_OPTION_ARG_NONE, &print_layouts,
-	 "Print a list of layout functions"},
-	{"tray", 't', 0, G_OPTION_ARG_NONE, &run_tray,
-	 "Add an icon in the system tray. This implies --daemon"},
-	{"daemon", 'd', 0, G_OPTION_ARG_NONE, &run_daemon,
-	 "Run a background process listening for hotkey events"},
-	{NULL}
+	{ "layout", 'l', 0, G_OPTION_ARG_STRING, &layout_name,
+	  N_("The layout function to apply") },
+	{ "layouts", 0, 0, G_OPTION_ARG_NONE, &print_layouts,
+	  N_("Print a list of layout functions") },
+	{ "tray", 't', 0, G_OPTION_ARG_NONE, &run_tray,
+	  N_("Add an icon in the system tray. This implies --daemon") },
+	{ "daemon", 'd', 0, G_OPTION_ARG_NONE, &run_daemon,
+	  N_("Run a background process listening for hotkey events") },
+	{ NULL }
 };
 
 static void
@@ -76,11 +47,11 @@ do_print_layouts (const WwLayout *layouts)
 	
 	g_return_if_fail (layouts != NULL);
 	
-	g_printf ("Known layouts:\n");
+	g_print ("Known layouts:\n");
 	for (layout = layouts; layout->name != NULL; layout++)
 	{
 		g_return_if_fail (layout != NULL);
-		g_printf ("\t%s\t- %s\n", layout->name, layout->desc);
+		g_print (" - %-15s %s\n", layout->name, layout->desc);
 	}
 }
 
@@ -92,11 +63,7 @@ do_bind_keys (void)
 	layouts = ww_get_layouts ();
 	
 	for (iter = layouts; iter->name != NULL; iter++)
-	{
-		g_printf ("Bind %s %s\n", iter->name, iter->default_hotkey);
 		ww_hotkey_bind_layout (iter);
-	}
-	
 }
 
 int
@@ -125,7 +92,7 @@ main (int argc, char *argv[])
 	error = NULL;
 	if (!g_option_context_parse (options, &argc, &argv, &error))
 	{
-		g_print ("Bad command line: %s\n", error->message);
+		g_printerr (_("Invalid command line: %s\n"), error->message);
 		return 1;
 	}
 	
@@ -154,7 +121,7 @@ main (int argc, char *argv[])
 			 !run_tray)
 	{
 		gchar *help_msg = g_option_context_get_help (options, TRUE, NULL);
-		g_printf (help_msg);
+		g_print (help_msg);
 		g_free (help_msg);
 		return 1;
 	}

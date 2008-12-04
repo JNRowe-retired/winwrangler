@@ -1,10 +1,21 @@
-2008-10-29: winwrangler-0.1
 
- * Initial release
+== WinWrangler 0.2 ==
 
- * Support for 'tile': Tile all visible windows
+Release date: FIXME
 
- * Support for 'expand': Expand the currently active window to fill all 
-   available space without overlapping any new windows
+Changes:
+- Use GLib i18n functions (Wouter Bolsterlee)
 
- * Global hotkeys via the GtkHotkey library (min. version 0.2)
+Translations:
+- Dutch (Wouter Bolsterlee)
+
+
+== WinWrangler 0.1 ==
+
+Release date: 2008-10-29
+
+Features:
+- Support for 'tile': Tile all visible windows
+- Support for 'expand': Expand the currently active window to fill all 
+- available space without overlapping any new windows
+- Global hotkeys via the GtkHotkey library (min. version 0.2)
