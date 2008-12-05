@@ -1,4 +1,243 @@
 
+2008-12-05  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-utils.c
+	  Fix bug 293864 "WinWrangler has problems computing the desktop bounds". The problem was that in Gnome <= 2.22 the desktop window was just named "Desktop", but in Gnome >= 2.24 it is called 
+	  "x-nautilus-desktop". WinWrangler now checks for both.
+	
+
+2008-12-04  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* INSTALL@
+	* TODO.tasks
+	* po/Makefile.in.in
+	* .bzrignore
+	* po/nl.po
+	* Makefile.am
+	* NEWS
+	* configure.ac
+	* po/LINGUAS
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-hotkeys.c
+	* src/ww-layout-expand.c
+	* src/ww-layout-tile.c
+	* src/ww-layouts.c
+	* src/ww-layouts.h
+	* src/ww-tray.c
+	* src/ww-utils.c
+	* ------------------------------------------------------------
+	* revno: 37.1.1
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 16:34:10 +0100
+	* message:
+	* Mark applications options as translatable
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.2
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 16:35:34 +0100
+	* message:
+	* Removed unneeded po/Makefile.in.in
+	* removed:
+	* po/Makefile.in.in
+	* ------------------------------------------------------------
+	* revno: 37.1.3
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 16:37:25 +0100
+	* message:
+	* Removed INSTALL symlink
+	* removed:
+	* INSTALL@
+	* ------------------------------------------------------------
+	* revno: 37.1.4
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 16:44:34 +0100
+	* message:
+	* Added Dutch translation
+	* added:
+	* po/nl.po
+	* modified:
+	* po/LINGUAS
+	* ------------------------------------------------------------
+	* revno: 37.1.5
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 16:45:33 +0100
+	* message:
+	* Updated ignore patterns for po/ directory
+	* added:
+	* .bzrignore
+	* ------------------------------------------------------------
+	* revno: 37.1.6
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 16:51:04 +0100
+	* message:
+	* Updated ignore patterns
+	* 
+	* All generated files are now in the ignore list
+	* modified:
+	* .bzrignore
+	* ------------------------------------------------------------
+	* revno: 37.1.7
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:04:18 +0100
+	* message:
+	* Removed empty TODO.tasks
+	* removed:
+	* TODO.tasks
+	* ------------------------------------------------------------
+	* revno: 37.1.8
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:04:32 +0100
+	* message:
+	* Fix typo in Makefile.am comment
+	* modified:
+	* Makefile.am
+	* ------------------------------------------------------------
+	* revno: 37.1.9
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:20:53 +0100
+	* message:
+	* Mention correct project name in copyright blurbs
+	* modified:
+	* src/main.c
+	* src/winwrangler.h
+	* src/ww-hotkeys.c
+	* src/ww-layout-expand.c
+	* src/ww-layout-tile.c
+	* src/ww-layouts.c
+	* src/ww-layouts.h
+	* src/ww-tray.c
+	* src/ww-utils.c
+	* ------------------------------------------------------------
+	* revno: 37.1.10
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:28:53 +0100
+	* message:
+	* Cleanup i18n initialization in configure.ac
+	* modified:
+	* configure.ac
+	* ------------------------------------------------------------
+	* revno: 37.1.11
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:29:28 +0100
+	* message:
+	* Use glib/gi18n.h instead of custom gettext stuff
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.12
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:30:14 +0100
+	* message:
+	* Add compiled translations to ignore list
+	* modified:
+	* .bzrignore
+	* ------------------------------------------------------------
+	* revno: 37.1.13
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:42:34 +0100
+	* message:
+	* Improve error message on bad command line
+	* 
+	* ...and mark it as translatable.
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.14
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:44:41 +0100
+	* message:
+	* Prettify "known layouts" terminal output
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.15
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:45:39 +0100
+	* message:
+	* Removed unneeded includes from main.c
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.16
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:48:43 +0100
+	* message:
+	* Removed some debug output and avoid a compiler warning
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.17
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 17:53:17 +0100
+	* message:
+	* Avoid a compiler warning in string format specifier
+	* modified:
+	* src/main.c
+	* ------------------------------------------------------------
+	* revno: 37.1.18
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 18:01:34 +0100
+	* message:
+	* Cleanup NEWS formatting
+	* modified:
+	* NEWS
+	* ------------------------------------------------------------
+	* revno: 37.1.19
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 18:02:21 +0100
+	* message:
+	* Cleanup NEWS even more
+	* modified:
+	* NEWS
+	* ------------------------------------------------------------
+	* revno: 37.1.20
+	* committer: Wouter Bolsterlee <uws@xs4all.nl>
+	* branch nick: winwrangler.uws
+	* timestamp: Wed 2008-11-19 18:03:43 +0100
+	* message:
+	* Add w-i-p NEWS stuff for 0.2
+	* modified:
+	* NEWS
+	  Merge branch from Wouter Bolsterlee. Thanks Wouter!
+	
+
+2008-10-30  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* debian/changelog
+	* debian/control
+	  Missing ',' in the debian/control screwing the .deb generation without warnings... :-S
+	
+
+2008-10-30  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* debian/changelog
+	* debian/control
+	  Add build dep on libwnck to the .deb
+	
+
+2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* ChangeLog
+	  Update changelog
+	
+
 2008-10-29  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
 	* README
 	  Clarify the purpose of WinWrangler in the README

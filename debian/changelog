@@ -1,3 +1,9 @@
+winwrangler (0.2-ppa1) hardy; urgency=low
+
+  * Initial 0.2 Debian package release
+
+ -- Mikkel Kamstrup Erlandsen <mikkel.kamstrup@gmail.com>  Fri, 05 Dec 2008 23:30:26 +0100
+
 winwrangler (0.1-ppa3) hardy; urgency=low
 
   * Arg! Missing ',' screwing with the build without warnings...
