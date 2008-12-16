@@ -1,4 +1,25 @@
 
+2008-12-16  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* NEWS
+	* configure.ac
+	* debian/changelog
+	  Prepare to release 0.2.1
+	
+
+2008-12-16  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* src/ww-utils.c
+	  Properly fix bug 293864 : "WinWrangler has problems computing the desktop bounds". This is done by getting the window type with wnck_window_get_window_type() instead of using ad-hoc analysis of windows 
+	  to determine which are to be considered struts.
+	
+
+2008-12-05  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
+	* ChangeLog
+	* NEWS
+	* configure.ac
+	* debian/changelog
+	  Release 0.2
+	
+
 2008-12-05  "Mikkel Kamstrup Erlandsen" <mikkel.kamstrup@gmail.com>
 	* src/ww-utils.c
 	  Fix bug 293864 "WinWrangler has problems computing the desktop bounds". The problem was that in Gnome <= 2.22 the desktop window was just named "Desktop", but in Gnome >= 2.24 it is called 
