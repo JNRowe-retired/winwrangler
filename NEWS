@@ -1,3 +1,10 @@
+== WinWrangler 0.2.1 ==
+
+Release date: 2008-12-16
+
+Changes:
+- Fix bug 293864 : "WinWrangler has problems computing the desktop bounds" (kamstrup)
+
 
 == WinWrangler 0.2 ==
 
