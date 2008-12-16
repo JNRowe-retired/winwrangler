@@ -97,20 +97,8 @@ ww_filter_strut_windows (GList * windows, WnckWorkspace *current_workspace)
     g_debug ("\"%s\": (%d, %d)@%dx%d",
              wnck_window_get_name(win), x, y, w, h);*/
     		
-		if (wnck_window_is_skip_tasklist (win) &&
-			wnck_window_is_pinned (win) &&
-			!wnck_window_is_minimized (win) &&
-			!wnck_window_is_maximized (win) &&
-			!wnck_window_is_fullscreen (win) &&
-			!wnck_window_is_shaded (win))
+		if (wnck_window_get_window_type(win) == WNCK_WINDOW_DOCK)
 		{
-			/* We don't consider the desktop a strut.
-       * For Gnome >= 2.24 the desktop is called "x-nautilus-desktop", in
-       * earlier Gnome versions it is just called "Desktop" */
-			if (g_str_equal (wnck_window_get_name(win), "Desktop") ||
-                g_str_equal (wnck_window_get_name(win), "x-nautilus-desktop"))
-				continue;
-			
 			win_ws = wnck_window_get_workspace (win);
 			
 			if (current_workspace == NULL ||
