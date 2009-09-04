@@ -52,13 +52,14 @@ ww_filter_user_windows (GList * windows, WnckWorkspace *current_workspace)
 		{
 			win_ws = wnck_window_get_workspace (win);
 			
-			if (current_workspace == NULL ||
-				win_ws == current_workspace ||				
-				win_ws == NULL)	
+			if (current_workspace == NULL
+			    || (win_ws == current_workspace
+			        && wnck_window_is_in_viewport(win, current_workspace))
+			    || win_ws == NULL)	
 				result = g_list_append (result, win);
 				
 		}
-    }
+	}
 	
 	return result;
 }
