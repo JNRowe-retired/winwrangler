@@ -32,6 +32,11 @@ static WwLayout layouts[] = {
 	 "Tile all visible windows",
 	 "<Ctrl><Super>2",
 	 ww_layout_tile},
+	{"twothirds",
+	 "2/3 Layout",
+	 "Resize the active window to 2/3 of the screen",
+	 "<Ctrl><Super>3",
+	 ww_layout_twothirds},
 	{NULL}
 };
 

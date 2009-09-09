@@ -16,6 +16,7 @@ winwrangler_SOURCES = \
 	ww-hotkeys.c		\
 	ww-layout-expand.c	\
 	ww-layout-tile.c	\
+	ww-layout-twothirds.c	\
 	ww-layouts.c		\
 	ww-layouts.h		\
 	ww-utils.c		\

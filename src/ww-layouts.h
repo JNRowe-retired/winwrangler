@@ -28,6 +28,7 @@ G_BEGIN_DECLS
 
 WW_LAYOUT_IMPL(ww_layout_expand)
 WW_LAYOUT_IMPL(ww_layout_tile)
+WW_LAYOUT_IMPL(ww_layout_twothirds)
 
 G_END_DECLS
 
