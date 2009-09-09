@@ -161,3 +161,82 @@ ww_apply_layout_by_name (const gchar * layout_name)
 		return;
 	}	
 }
+
+#define is_high(w, h) (h > w)
+#define is_broad(w, h) (w > h)
+
+/**
+ * ww_calc_bounds
+ * @screen: The screen for which to calculate the bounds
+ * @struts: A list of %WnckWindow<!---->s that should be treated as
+ *          blocking elements on the desktop. Eg. panels and docks
+ * @x: Return value for the left side of the bounding box
+ * @y: Return value for the top of the box
+ * @right: Return coordinate for the right side of the bounding box
+ * @bottom: Return value for the bottom coordinate of the bounding box
+ *
+ * Calculate the maximal rect within a set of blocking windows.
+ * For simplicity this method assumes that all struts are along the screen
+ * edges and expand over the entire screen edge. Ie a standard panel setup.
+ */
+void
+ww_calc_bounds (WnckScreen *screen,
+                GList *struts, 
+                int *left, 
+                int *top, 
+                int *right, 
+                int *bottom)
+{
+	GList		*next;
+	WnckWindow  *win;
+	int wx, wy, ww, wh; /* current window geom */
+	int edge_l, edge_t, edge_b, edge_r;
+	int screen_w, screen_h;
+	
+	edge_l = 0;
+	edge_t = 0;
+	edge_r = wnck_screen_get_width (screen);
+	edge_b = wnck_screen_get_height (screen);
+	
+	screen_w = edge_r;
+	screen_h = edge_b;
+	
+	for (next = struts; next; next = next->next)
+	{	
+		win = WNCK_WINDOW (next->data);
+		wnck_window_get_geometry (win, &wx, &wy, &ww, &wh);
+		
+		/* Left side strut */
+		if (is_high(ww, wh) && wx == 0) {
+			edge_l = MAX(edge_l, ww);
+		}
+		
+		/* Top struct */
+		else if (is_broad(ww, wh) && wy == 0) {
+			edge_t = MAX (edge_t, wh);
+		}
+		
+		/* Right side strut */
+		else if (is_high(ww, wh) && (wx+ww) == screen_w) {
+			edge_r = MIN(edge_r, wx);
+		}
+		
+		/* Bottom struct */
+		else if (is_broad(ww, wh) && (wy+wh) == screen_h) {
+			edge_b = MIN (edge_b, wy);
+		}
+		
+		else {
+			g_warning ("Desktop layout contains floating element at "
+					   "(%d, %d)@%dx%d", wx, wy, ww, wh);
+		}
+	}
+	
+	g_debug ("Calculated desktop bounds (%d, %d), (%d, %d)",
+			 edge_l, edge_t, edge_r, edge_b);
+	
+	*left = edge_l;
+	*top = edge_t;
+	*right = edge_r;
+	*bottom = edge_b;
+}

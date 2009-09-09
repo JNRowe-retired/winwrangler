@@ -73,68 +73,6 @@ get_grid_size (GList	*windows)
 	return result;
 }
 
-#define is_high(w, h) (h > w)
-#define is_broad(w, h) (w > h)
-/* Calculate the maximal rect within a set of blocking windows.
- * For simplicity this method assumes that all struts are along the screen
- * edges and expand over the entire screen edge. Ie a standard panel setup. */
-void
-calculate_bounds (WnckScreen *screen, GList *struts, int *x, int *y, int *bottom_right, int *bottom)
-{
-	GList		*next;
-	WnckWindow  *win;
-	int wx, wy, ww, wh; /* current window geom */
-	int edge_l, edge_t, edge_b, edge_r;
-	int screen_w, screen_h;
-	
-	edge_l = 0;
-	edge_t = 0;
-	edge_r = wnck_screen_get_width (screen);
-	edge_b = wnck_screen_get_height (screen);
-	
-	screen_w = edge_r;
-	screen_h = edge_b;
-	
-	for (next = struts; next; next = next->next)
-	{	
-		win = WNCK_WINDOW (next->data);
-		wnck_window_get_geometry (win, &wx, &wy, &ww, &wh);
-		
-		/* Left side strut */
-		if (is_high(ww, wh) && wx == 0) {
-			edge_l = MAX(edge_l, ww);
-		}
-		
-		/* Top struct */
-		else if (is_broad(ww, wh) && wy == 0) {
-			edge_t = MAX (edge_t, wh);
-		}
-		
-		/* Right side strut */
-		else if (is_high(ww, wh) && (wx+ww) == screen_w) {
-			edge_r = MIN(edge_r, wx);
-		}
-		
-		/* Bottom struct */
-		else if (is_broad(ww, wh) && (wy+wh) == screen_h) {
-			edge_b = MIN (edge_b, wy);
-		}
-		
-		else {
-			g_warning ("Desktop layout contains floating element at "
-					   "(%d, %d)@%dx%d", wx, wy, ww, wh);
-		}
-	}
-	
-	g_debug ("Calculated desktop bounds (%d, %d), (%d, %d)",
-			 edge_l, edge_t, edge_r, edge_b);
-	
-	*x = edge_l;
-	*y = edge_t;
-	*bottom_right = edge_r;
-	*bottom = edge_b;
-}
-
 /**
  * ww_layout_tile
  * @screen: The screen to work on
@@ -162,7 +100,7 @@ ww_layout_tile (WnckScreen	*screen,
 	
 	dim = get_grid_size (windows);
 	
-	calculate_bounds (screen, struts, &edge_l, &edge_t, &edge_r, &edge_b);
+	ww_calc_bounds (screen, struts, &edge_l, &edge_t, &edge_r, &edge_b);
 	
 	cell_w = (edge_r - edge_l) / dim[0];
 	cell_h = (edge_b - edge_t) / dim[1];

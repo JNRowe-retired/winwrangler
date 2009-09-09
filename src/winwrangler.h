@@ -74,5 +74,12 @@ gboolean			ww_hotkey_bind_layout		(WwLayout *layout);
 
 void				ww_apply_layout_by_name		(const gchar *layout_name);
 
+void				ww_calc_bounds				(WnckScreen	*screen,
+												 GList *struts,
+												 int *left,
+												 int *top,
+												 int *right,
+												 int *bottom);
+
 G_END_DECLS
 #endif /* _WW_H_ */

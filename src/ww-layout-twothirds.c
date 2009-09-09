@@ -25,9 +25,6 @@
 
 #include "winwrangler.h"
 
-void
-calculate_bounds (WnckScreen *screen, GList *struts, int *x, int *y, int *bottom_right, int *bottom);
-
 /**
  * ww_layout_twothirds
  * @screen: The screen to work on
@@ -55,7 +52,7 @@ ww_layout_twothirds (WnckScreen	*screen,
 	if (g_list_length(windows) == 0)
 		return;
 	
-	calculate_bounds (screen, struts, &edge_l, &edge_t, &edge_r, &edge_b);
+	ww_calc_bounds (screen, struts, &edge_l, &edge_t, &edge_r, &edge_b);
 	
 	lg_w = (edge_r - edge_l ) / 3 * 2;
 	rg_w = (edge_r - edge_l) - lg_w;
