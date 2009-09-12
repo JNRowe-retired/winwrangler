@@ -46,7 +46,6 @@ ww_layout_twothirds (WnckScreen	*screen,
 	int		r_cell_w, r_cell_h;
 	int		edge_l, edge_t, edge_b, edge_r;
 	int		lg_h, lg_w, rg_h, rg_w;
-	int		is_active;
 	
 	g_return_if_fail (WNCK_IS_SCREEN(screen));
 	if (g_list_length(windows) == 0)
@@ -75,22 +74,11 @@ ww_layout_twothirds (WnckScreen	*screen,
 	dim -= 1;
 
 	/* If there is no active window, do nothing */
-	/* FIXME: is there a better way to do this? */
-	is_active = FALSE;
-	for (next = windows; next; next = next->next) 
-	{
-		if (wnck_window_is_active (next->data) == TRUE) 
-		{
-			is_active = TRUE;
-			break;
-		}
+	if (active == NULL
+	    || wnck_window_is_skip_tasklist (active)) {
+		g_debug ("No active window");
+		return;
 	}
-	if ( is_active == FALSE ) 
-	{
-		g_debug("No active window!");
-		return; 
-	} 
-	// END FIXME
 
 	r_cell_w = rg_w;
 	r_cell_h = rg_h / dim;
