@@ -21,3 +21,13 @@ Adding a New Layout:
 Implement a WwLayoutHandler as defined in winwrangler.h and add a declaration
 in ww-layouts.h and a description in ww-layouts.c. Each layout should be
 in a separate file called ww-layout-<name>.c.
+
+Hints for Ubuntu PPA Uploads:
+ * First rename the release tarball to winwrangler_VERSION.orig.tar.gz
+   and unpack it.
+ * Then update debian/changelog, formatting the timestamp with 'date -R'.
+ * Run 'debuild -S' from inside the unpacked winwrangler-VERSION dir
+ * Just outside the winwrangler-VERSION dir, next to the .orig tarball run
+   'dput [dput-target] winwrangler_VERSION-ppa1_source.changes'. You only need
+   to set the dput-target if you haven't configured dput to use your PPA
+   by default
