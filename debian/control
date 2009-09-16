@@ -17,7 +17,8 @@ Depends: ${shlibs:Depends},
 Description: Small desktop daemon to perform advanced window
  manipulations not commonly found in window managers.
  .
- This package contains support for the 'tile' and 'expand' actions.
+ This package contains support for the 'tile', 'expand',
+ and '2/3 layout' actions.
  .
- Disclaimer: This package is based on a very early release of WinWrangler and
- should not be considered production ready by a long shot.
+ Disclaimer: This package is based on a very early release of WinWrangler
+ and should not be considered production ready by a long shot.
