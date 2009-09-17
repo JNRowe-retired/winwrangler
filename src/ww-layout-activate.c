@@ -25,8 +25,10 @@
  * @windows: A list of all windows on the @screen
  * @active: The currently active window
  * @error: %GError to set on failure
+ * @direction: LEFT, RIGHT UP or DOWN
  *
- * A %WwLayoutHandler TODO FIXME
+ * A %WwLayoutHandler to activate a window on the left / right / top / bottom of
+ * the current one.
  */
 
 #include "winwrangler.h"
@@ -53,7 +55,9 @@ ww_layout_activate(
 
 	g_return_if_fail (WNCK_IS_SCREEN(screen));
 	if (g_list_length(windows) == 0)
+    {
 		return;
+    }
 	
 	/* If there is no active window, do nothing */
 	if (active == NULL
@@ -191,7 +195,8 @@ ww_layout_activate(
 		}
 	}
 
-	if (to_activate) {
+	if (to_activate)
+    {
 		wnck_window_activate(to_activate->data, 1);
 	}
 	return; 
