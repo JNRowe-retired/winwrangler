@@ -29,6 +29,10 @@ G_BEGIN_DECLS
 WW_LAYOUT_IMPL(ww_layout_expand)
 WW_LAYOUT_IMPL(ww_layout_tile)
 WW_LAYOUT_IMPL(ww_layout_twothirds)
+WW_LAYOUT_IMPL(ww_layout_activate_left)
+WW_LAYOUT_IMPL(ww_layout_activate_right)
+WW_LAYOUT_IMPL(ww_layout_activate_up)
+WW_LAYOUT_IMPL(ww_layout_activate_down)
 
 G_END_DECLS
 

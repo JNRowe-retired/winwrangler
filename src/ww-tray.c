@@ -106,6 +106,10 @@ create_ui_def (const WwLayout *layouts)
 					 "      <menuitem action=\"expand\"/>"
 					 "      <menuitem action=\"tile\"/>"
 					 "      <menuitem action=\"twothirds\"/>"
+					 "      <menuitem action=\"activate_left\"/>"
+					 "      <menuitem action=\"activate_right\"/>"
+					 "      <menuitem action=\"activate_up\"/>"
+					 "      <menuitem action=\"activate_down\"/>"
 					 "  </popup>"
 					 "</ui>");
 }
