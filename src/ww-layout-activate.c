@@ -34,13 +34,13 @@
 #include "winwrangler.h"
 #include <math.h>
 
-typedef enum { LEFT, RIGHT, UP, DOWN } Direction;
+typedef enum { LEFT, RIGHT, UP, DOWN } WwDirection;
 
-void
-ww_layout_activate (WnckScreen	*screen,
-                    GList		*windows,
-                    WnckWindow	*active,
-                    Direction	direction)
+WnckWindow*
+ww_find_neighbour (WnckScreen	*screen,
+                   GList		*windows,
+                   WnckWindow	*active,
+                   WwDirection	direction)
 {
 	WnckWindow	*neighbour;
 	GList		*next;
@@ -50,17 +50,18 @@ ww_layout_activate (WnckScreen	*screen,
 
 	neighbour = NULL;
 	
-	g_return_if_fail (WNCK_IS_SCREEN(screen));
+	g_return_val_if_fail (WNCK_IS_SCREEN(screen), NULL);
+	
 	if (g_list_length(windows) == 0)
     {
-		return;
+		return NULL;
     }
 	
 	/* If there is no active window, do nothing */
 	if (active == NULL
 		|| wnck_window_is_skip_tasklist (active)) {
 		g_debug ("No active window");
-		return;
+		return NULL;
 	}
 
 	nx = ny = nw = nh = 0; 
@@ -191,16 +192,10 @@ ww_layout_activate (WnckScreen	*screen,
 	}
 
 	if (neighbour)
-    {
-    	g_debug ("Switching to '%s' (%d, %d) @ %d x %d",
-    	         wnck_window_get_name (neighbour), nx, ny, nw, nh);
-		wnck_window_activate(neighbour, 1);
-	}
-	else 
-	{
-		g_debug ("No window found");
-	}
-	return; 
+		g_debug ("Found neighbour '%s' (%d, %d) @ %d x %d",
+		         wnck_window_get_name (neighbour), nx, ny, nw, nh);			
+	
+	return neighbour; 
 }
 
 void
@@ -210,7 +205,11 @@ ww_layout_activate_left(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, active, LEFT );
+	WnckWindow *neighbour;
+
+	neighbour = ww_find_neighbour (screen, windows, active, LEFT);
+	neighbour ? wnck_window_activate (neighbour, 0) : 
+				g_debug ("Unable to find left neighbour");
 }
 
 void
@@ -220,7 +219,11 @@ ww_layout_activate_right(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, active, RIGHT );
+	WnckWindow *neighbour;
+
+	neighbour = ww_find_neighbour (screen, windows, active, RIGHT);
+	neighbour ? wnck_window_activate (neighbour, 0) : 
+				g_debug ("Unable to find right neighbour");
 }
 
 void
@@ -230,7 +233,11 @@ ww_layout_activate_up(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, active, UP );
+	WnckWindow *neighbour;
+
+	neighbour = ww_find_neighbour (screen, windows, active, UP);
+	neighbour ? wnck_window_activate (neighbour, 0) : 
+				g_debug ("Unable to find upper neighbour");
 }
 
 void
@@ -240,5 +247,9 @@ ww_layout_activate_down(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, active, DOWN );
+	WnckWindow *neighbour;
+
+	neighbour = ww_find_neighbour (screen, windows, active, DOWN);
+	neighbour ? wnck_window_activate (neighbour, 0) : 
+				g_debug ("Unable to find bottom neighbour");
 }
