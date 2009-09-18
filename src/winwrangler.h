@@ -50,6 +50,14 @@ typedef struct
   WwLayoutHandler handler;  
 } WwLayout;
 
+typedef enum
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+} WwDirection;
+
 /* Constants */
 #define WW_MOVERESIZE_FLAGS WNCK_WINDOW_CHANGE_WIDTH | WNCK_WINDOW_CHANGE_HEIGHT | WNCK_WINDOW_CHANGE_X | WNCK_WINDOW_CHANGE_Y
 
@@ -80,6 +88,11 @@ void				ww_calc_bounds				(WnckScreen	*screen,
 												 int *top,
 												 int *right,
 												 int *bottom);
+
+WnckWindow*			ww_find_neighbour			(WnckScreen		*screen,
+												 GList			*windows,
+						                         WnckWindow		*active,
+						                         WwDirection	direction);
 
 G_END_DECLS
 #endif /* _WW_H_ */

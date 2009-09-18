@@ -16,6 +16,7 @@
  *  along with WinWranger.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <math.h>
 
 #include "winwrangler.h"
 
@@ -239,4 +240,176 @@ ww_calc_bounds (WnckScreen *screen,
 	*top = edge_t;
 	*right = edge_r;
 	*bottom = edge_b;
+}
+
+/**
+ * ww_find_neighbour
+ * @screen:
+ * @windows:
+ * @active:
+ * @direction:
+ *
+ * Return value: The neighbouring window from @windows in the given direction
+ *               or %NULL in case no window is found or @active is %NULL
+ */
+WnckWindow*
+ww_find_neighbour (WnckScreen	*screen,
+                   GList		*windows,
+                   WnckWindow	*active,
+                   WwDirection	direction)
+{
+	WnckWindow	*neighbour;
+	GList		*next;
+	int			ax, ay, aw, ah; /* active window geometry */
+	int			wx, wy, ww, wh; /* geometry for currently checked window */ 
+	int			nx, ny, nw, nh; /* geometry of neighbour */
+
+	neighbour = NULL;
+	
+	g_return_val_if_fail (WNCK_IS_SCREEN(screen), NULL);
+	
+	if (g_list_length(windows) == 0)
+    {
+		return NULL;
+    }
+	
+	/* If there is no active window, do nothing */
+	if (active == NULL
+		|| wnck_window_is_skip_tasklist (active)) {
+		g_debug ("No active window");
+		return NULL;
+	}
+
+	nx = ny = nw = nh = 0; 
+
+	wnck_window_get_geometry (active, &ax, &ay, &aw, &ah);
+	g_debug("Active window '%s' (%d, %d) @ %d x %d",
+	        wnck_window_get_name (active), ax, ay, aw, ah);
+
+
+	if ( direction == LEFT )
+	{
+		for ( next = windows; next; next = next->next )
+		{
+			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
+			if ( wx < ax )
+			{
+				if ( neighbour == NULL )
+				{
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+				else if ( wx == nx )
+				{
+					if ( abs(wy - ay) < abs(ny - ay) )
+					{
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
+					}
+				}
+				else if ( wx > nx )
+				{
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+			} 
+		}
+	}
+	else if ( direction == RIGHT )
+	{
+		int a_right = ax + aw;
+		int w_right;
+		
+		for ( next = windows; next; next = next->next )
+		{
+			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
+			w_right = wx + ww;
+			
+			if ( w_right > a_right )
+			{
+				if ( neighbour == NULL )
+				{
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+				else if ( w_right == (nx + nw) )
+				{
+					if ( abs(wy - ay) < abs(ny - ay) )
+					{
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
+					}
+				}
+				else if ( w_right < (nx + nw) ) {
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+			}
+		}
+	}
+	else if ( direction == DOWN )
+	{
+		int a_bottom = ay + ah;
+		int w_bottom;
+		
+		for ( next = windows; next; next = next->next )
+		{
+			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
+			w_bottom = wy + wh;
+			
+			if ( w_bottom > a_bottom )
+			{
+				if ( neighbour == NULL )
+				{
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+				else if ( w_bottom == (ny + nh) )
+				{
+					if ( abs(wx - ax) < abs(nx - ax) )
+					{
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
+					}
+				}
+				else if ( w_bottom < (ny + nh) ) {
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+			}
+		}
+	}
+	else if ( direction == UP )
+	{
+		for ( next = windows; next; next = next->next )
+		{
+			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
+			if ( wy < ay )
+			{
+				if ( neighbour == NULL )
+				{
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+				else if ( wy == ny )
+				{
+					if ( abs(wx - ax) < abs(nx - ax) )
+					{
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
+					}
+				}
+				else if ( wy > ny ) {
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
+				}
+			}
+		}
+	}
+
+	if (neighbour)
+		g_debug ("Found neighbour '%s' (%d, %d) @ %d x %d",
+		         wnck_window_get_name (neighbour), nx, ny, nw, nh);			
+	
+	return neighbour; 
 }
