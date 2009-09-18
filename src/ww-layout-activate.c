@@ -37,22 +37,19 @@
 typedef enum { LEFT, RIGHT, UP, DOWN } Direction;
 
 void
-ww_layout_activate(	
-				WnckScreen	*screen,
-				GList		*windows,
-				GList		*struts,
-				WnckWindow	*active,
-				GError		**error,
-				Direction	direction
-				)
+ww_layout_activate (WnckScreen	*screen,
+                    GList		*windows,
+                    WnckWindow	*active,
+                    Direction	direction)
 {
-	GList	*to_activate, *next;
-	int		ax, ay, aw, ah; /* active window geometry */
-	int		wx, wy, ww, wh; 
-	int		fx, fy, found;
+	WnckWindow	*neighbour;
+	GList		*next;
+	int			ax, ay, aw, ah; /* active window geometry */
+	int			wx, wy, ww, wh; /* geometry for currently checked window */ 
+	int			nx, ny, nw, nh; /* geometry of neighbour */
 
-	to_activate = NULL;
-
+	neighbour = NULL;
+	
 	g_return_if_fail (WNCK_IS_SCREEN(screen));
 	if (g_list_length(windows) == 0)
     {
@@ -66,11 +63,11 @@ ww_layout_activate(
 		return;
 	}
 
-	found = FALSE;
-	fx = fy = 0; 
+	nx = ny = nw = nh = 0; 
 
 	wnck_window_get_geometry (active, &ax, &ay, &aw, &ah);
-	g_debug("Active window geometry: ax: %d, ay: %d, aw: %d, ah: %d", ax, ay, aw, ah);
+	g_debug("Active window '%s' (%d, %d) @ %d x %d",
+	        wnck_window_get_name (active), ax, ay, aw, ah);
 
 
 	if ( direction == LEFT )
@@ -80,86 +77,87 @@ ww_layout_activate(
 			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
 			if ( wx < ax )
 			{
-				if ( found == FALSE )
+				if ( neighbour == NULL )
 				{
-					to_activate = next;
-					fx = wx;
-					fy = wy;
-					found = TRUE;
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
-				else if ( wx == fx )
+				else if ( wx == nx )
 				{
-					if ( abs(wy - ay) < abs(fy - ay) )
+					if ( abs(wy - ay) < abs(ny - ay) )
 					{
-						to_activate = next;
-						fy = wy;
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
 					}
 				}
-				else if ( wx > fx )
+				else if ( wx > nx )
 				{
-					to_activate = next;
-					fx = wx;
-					fy = wy;
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
 			} 
 		}
 	}
 	else if ( direction == RIGHT )
 	{
+		int a_right = ax + aw;
+		int w_right;
+		
 		for ( next = windows; next; next = next->next )
 		{
 			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
-			if ( wx > ax )
+			w_right = wx + ww;
+			
+			if ( w_right > a_right )
 			{
-				if ( found == FALSE )
+				if ( neighbour == NULL )
 				{
-					to_activate = next;
-					fx = wx;
-					fy = wy;
-					found = TRUE;
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
-				else if ( wx == fx )
+				else if ( w_right == (nx + nw) )
 				{
-					if ( abs(wy - ay) < abs(fy - ay) )
+					if ( abs(wy - ay) < abs(ny - ay) )
 					{
-						to_activate = next;
-						fy = wy;
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
 					}
 				}
-				else if ( wx < fx ) {
-					to_activate = next;
-					fx = wx;
-					fy = wy;
+				else if ( w_right < (nx + nw) ) {
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
 			}
 		}
 	}
 	else if ( direction == DOWN )
 	{
+		int a_bottom = ay + ah;
+		int w_bottom;
+		
 		for ( next = windows; next; next = next->next )
 		{
 			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
-			if ( wy > ay )
+			w_bottom = wy + wh;
+			
+			if ( w_bottom > a_bottom )
 			{
-				if ( found == FALSE )
+				if ( neighbour == NULL )
 				{
-					to_activate = next;
-					fy = wy;
-					fx = wx;
-					found = TRUE;
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
-				else if ( wy == fy )
+				else if ( w_bottom == (ny + nh) )
 				{
-					if ( abs(wx - ax) < abs(fx - ax) )
+					if ( abs(wx - ax) < abs(nx - ax) )
 					{
-						to_activate = next;
-						fx = wx;
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
 					}
 				}
-				else if ( wy < fy ) {
-					to_activate = next;
-					fy = wy;
-					fx = wx;
+				else if ( w_bottom < (ny + nh) ) {
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
 			}
 		}
@@ -171,33 +169,36 @@ ww_layout_activate(
 			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
 			if ( wy < ay )
 			{
-				if ( found == FALSE )
+				if ( neighbour == NULL )
 				{
-					to_activate = next;
-					fy = wy;
-					fx = wx;
-					found = TRUE;
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
-				else if ( wy == fy )
+				else if ( wy == ny )
 				{
-					if ( abs(wx - ax) < abs(fx - ax) )
+					if ( abs(wx - ax) < abs(nx - ax) )
 					{
-						to_activate = next;
-						fx = wx;
+						neighbour = WNCK_WINDOW (next->data);
+						nx = wx; ny = wy; nw = ww; nh = wh;
 					}
 				}
-				else if ( wy > fy ) {
-					to_activate = next;
-					fy = wy;
-					fx = wx;
+				else if ( wy > ny ) {
+					neighbour = WNCK_WINDOW (next->data);
+					nx = wx; ny = wy; nw = ww; nh = wh;
 				}
 			}
 		}
 	}
 
-	if (to_activate)
+	if (neighbour)
     {
-		wnck_window_activate(to_activate->data, 1);
+    	g_debug ("Switching to '%s' (%d, %d) @ %d x %d",
+    	         wnck_window_get_name (neighbour), nx, ny, nw, nh);
+		wnck_window_activate(neighbour, 1);
+	}
+	else 
+	{
+		g_debug ("No window found");
 	}
 	return; 
 }
@@ -209,7 +210,7 @@ ww_layout_activate_left(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, struts, active, error, LEFT );
+	ww_layout_activate( screen, windows, active, LEFT );
 }
 
 void
@@ -219,7 +220,7 @@ ww_layout_activate_right(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, struts, active, error, RIGHT );
+	ww_layout_activate( screen, windows, active, RIGHT );
 }
 
 void
@@ -229,7 +230,7 @@ ww_layout_activate_up(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, struts, active, error, UP );
+	ww_layout_activate( screen, windows, active, UP );
 }
 
 void
@@ -239,5 +240,5 @@ ww_layout_activate_down(WnckScreen	*screen,
 				WnckWindow	*active,
 				GError		**error)
 {
-	ww_layout_activate( screen, windows, struts, active, error, DOWN );
+	ww_layout_activate( screen, windows, active, DOWN );
 }
