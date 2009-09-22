@@ -1,6 +1,6 @@
 SUBDIRS = src po data
 
-winwranglerdocdir = ${prefix}/doc/winwrangler
+winwranglerdocdir = ${datadir}/doc/winwrangler
 winwranglerdoc_DATA = \
 	README		\
 	COPYING		\
