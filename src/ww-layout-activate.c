@@ -43,7 +43,7 @@ ww_layout_activate_left(WnckScreen	*screen,
 	WnckWindow *neighbour;
 
 	neighbour = ww_find_neighbour (screen, windows, active, LEFT);
-	neighbour ? wnck_window_activate (neighbour, 0) : 
+	neighbour ? wnck_window_activate (neighbour, ww_get_event_time()) : 
 				g_debug ("Unable to find left neighbour");
 }
 
@@ -57,7 +57,7 @@ ww_layout_activate_right(WnckScreen	*screen,
 	WnckWindow *neighbour;
 
 	neighbour = ww_find_neighbour (screen, windows, active, RIGHT);
-	neighbour ? wnck_window_activate (neighbour, 0) : 
+	neighbour ? wnck_window_activate (neighbour, ww_get_event_time()) : 
 				g_debug ("Unable to find right neighbour");
 }
 
@@ -71,7 +71,7 @@ ww_layout_activate_up(WnckScreen	*screen,
 	WnckWindow *neighbour;
 
 	neighbour = ww_find_neighbour (screen, windows, active, UP);
-	neighbour ? wnck_window_activate (neighbour, 0) : 
+	neighbour ? wnck_window_activate (neighbour, ww_get_event_time()) : 
 				g_debug ("Unable to find upper neighbour");
 }
 
@@ -85,6 +85,6 @@ ww_layout_activate_down(WnckScreen	*screen,
 	WnckWindow *neighbour;
 
 	neighbour = ww_find_neighbour (screen, windows, active, DOWN);
-	neighbour ? wnck_window_activate (neighbour, 0) : 
+	neighbour ? wnck_window_activate (neighbour, ww_get_event_time()) : 
 				g_debug ("Unable to find bottom neighbour");
 }
