@@ -94,5 +94,9 @@ WnckWindow*			ww_find_neighbour			(WnckScreen		*screen,
 						                         WnckWindow		*active,
 						                         WwDirection	direction);
 
+guint32				ww_get_event_time			(void);
+
+void				ww_set_event_time			(guint32 event_time);
+
 G_END_DECLS
 #endif /* _WW_H_ */

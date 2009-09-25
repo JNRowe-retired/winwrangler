@@ -20,6 +20,8 @@
 
 #include "winwrangler.h"
 
+static guint32 _event_time = 0;
+
 /**
  * ww_filter_user_windows
  * @windows: List of %WnckWindow<!-- -->s to filter
@@ -412,4 +414,16 @@ ww_find_neighbour (WnckScreen	*screen,
 		         wnck_window_get_name (neighbour), nx, ny, nw, nh);			
 	
 	return neighbour; 
+}
+
+guint32
+ww_get_event_time (void)
+{
+	return _event_time;
+}
+
+void
+ww_set_event_time (guint32 event_time)
+{
+	_event_time = event_time;
 }

@@ -28,6 +28,8 @@ on_hotkey_activated (GtkHotkeyInfo *hotkey, guint event_time, WwLayout *layout)
 	g_message ("Hotkey %s for '%s' activated",
 		 gtk_hotkey_info_get_signature (hotkey),
 		 layout->name);
+
+	ww_set_event_time (event_time);
 	ww_apply_layout_by_name (layout->name);
 }
 
@@ -102,7 +104,8 @@ ww_hotkey_bind_layout (WwLayout *layout)
 	}
 	
 	/* Attach callbacks to hotkey events */
-	g_signal_connect (hotkey, "activated", on_hotkey_activated, layout);
+	g_signal_connect (hotkey, "activated",
+                      G_CALLBACK(on_hotkey_activated), layout);
 	
 	g_debug("Bound hotkey %s for '%s'",
 		gtk_hotkey_info_get_signature(hotkey),
