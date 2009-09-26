@@ -19,22 +19,10 @@
  *	along with WinWranger.	If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * ww_layout_activate
- * @screen: The screen to work on
- * @windows: A list of all windows on the @screen
- * @active: The currently active window
- * @error: %GError to set on failure
- * @direction: LEFT, RIGHT UP or DOWN
- *
- * A %WwLayoutHandler to activate a window on the left / right / top / bottom of
- * the current one.
- */
-
 #include "winwrangler.h"
 
 void
-ww_layout_activate_left(WnckScreen	*screen,
+ww_layout_switch_spatial_left(WnckScreen	*screen,
 				GList		*windows,
 				GList		*struts,
 				WnckWindow	*active,
@@ -48,7 +36,7 @@ ww_layout_activate_left(WnckScreen	*screen,
 }
 
 void
-ww_layout_activate_right(WnckScreen	*screen,
+ww_layout_switch_spatial_right(WnckScreen	*screen,
 				GList		*windows,
 				GList		*struts,
 				WnckWindow	*active,
@@ -62,7 +50,7 @@ ww_layout_activate_right(WnckScreen	*screen,
 }
 
 void
-ww_layout_activate_up(WnckScreen	*screen,
+ww_layout_switch_spatial_up(WnckScreen	*screen,
 				GList		*windows,
 				GList		*struts,
 				WnckWindow	*active,
@@ -76,7 +64,7 @@ ww_layout_activate_up(WnckScreen	*screen,
 }
 
 void
-ww_layout_activate_down(WnckScreen	*screen,
+ww_layout_switch_spatial_down(WnckScreen	*screen,
 				GList		*windows,
 				GList		*struts,
 				WnckWindow	*active,
