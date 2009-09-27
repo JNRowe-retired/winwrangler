@@ -246,6 +246,31 @@ ww_calc_bounds (WnckScreen *screen,
 }
 
 /**
+ * ww_window_center
+ * @win:
+ * @center_x:
+ * @center_y:
+ *
+ * Return value: The return value is written to @center_x and @center_y and
+ *               represents the center of gravity for @win
+ */
+static void
+ww_window_center (WnckWindow *win, int *center_x, int *center_y)
+{
+	int x, y, w, h;
+
+	wnck_window_get_geometry (win, &x, &y, &w, &h);
+	*center_x = x + (w/2);
+	*center_y = y + (h/2);	
+}
+
+static double
+ww_distance (int x1, int y1, int x2, int y2)
+{
+	return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+}
+
+/**
  * ww_find_neighbour
  * @screen:
  * @windows:
@@ -264,8 +289,9 @@ ww_find_neighbour (WnckScreen	*screen,
 	WnckWindow	*neighbour;
 	GList		*next;
 	int			ax, ay, aw, ah; /* active window geometry */
-	int			wx, wy, ww, wh; /* geometry for currently checked window */ 
-	int			nx, ny, nw, nh; /* geometry of neighbour */
+	int			wx, wy; /* geometry for currently checked window */ 
+	int			nx, ny; /* geometry of neighbour */
+	double		wdist, ndist; /* distance to active window */
 
 	neighbour = NULL;
 	
@@ -283,101 +309,60 @@ ww_find_neighbour (WnckScreen	*screen,
 		return NULL;
 	}
 
-	nx = ny = nw = nh = 0; 
+	nx = ny = 0;
+	ndist = 100000;
 
 	wnck_window_get_geometry (active, &ax, &ay, &aw, &ah);
 	g_debug("Active window '%s' (%d, %d) @ %d x %d",
 	        wnck_window_get_name (active), ax, ay, aw, ah);
 
-
+	/* Set ax and ay to the center of grav. for active */
+	ww_window_center (active, &ax, &ay);
+	
 	if ( direction == LEFT )
 	{
 		for ( next = windows; next; next = next->next )
 		{
-			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
+			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
+			wdist = ww_distance (wx, wy, ax, ay);
 			if ( wx < ax )
 			{
-				if ( neighbour == NULL )
+				if ( wdist < ndist )
 				{
 					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
-				}
-				else if ( wx == nx )
-				{
-					if ( abs(wy - ay) < abs(ny - ay) )
-					{
-						neighbour = WNCK_WINDOW (next->data);
-						nx = wx; ny = wy; nw = ww; nh = wh;
-					}
-				}
-				else if ( wx > nx )
-				{
-					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
+					ndist = wdist;
 				}
 			} 
 		}
 	}
 	else if ( direction == RIGHT )
 	{
-		int a_right = ax + aw;
-		int w_right;
-		
 		for ( next = windows; next; next = next->next )
 		{
-			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
-			w_right = wx + ww;
-			
-			if ( w_right > a_right )
+			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
+			wdist = ww_distance (wx, wy, ax, ay);
+			if ( wx > ax )
 			{
-				if ( neighbour == NULL )
+				if ( wdist < ndist )
 				{
 					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
-				}
-				else if ( w_right == (nx + nw) )
-				{
-					if ( abs(wy - ay) < abs(ny - ay) )
-					{
-						neighbour = WNCK_WINDOW (next->data);
-						nx = wx; ny = wy; nw = ww; nh = wh;
-					}
-				}
-				else if ( w_right < (nx + nw) ) {
-					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
+					ndist = wdist;
 				}
 			}
 		}
 	}
 	else if ( direction == DOWN )
 	{
-		int a_bottom = ay + ah;
-		int w_bottom;
-		
 		for ( next = windows; next; next = next->next )
 		{
-			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
-			w_bottom = wy + wh;
-			
-			if ( w_bottom > a_bottom )
+			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
+			wdist = ww_distance (wx, wy, ax, ay);
+			if ( wy > ay )
 			{
-				if ( neighbour == NULL )
+				if ( wdist < ndist )
 				{
 					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
-				}
-				else if ( w_bottom == (ny + nh) )
-				{
-					if ( abs(wx - ax) < abs(nx - ax) )
-					{
-						neighbour = WNCK_WINDOW (next->data);
-						nx = wx; ny = wy; nw = ww; nh = wh;
-					}
-				}
-				else if ( w_bottom < (ny + nh) ) {
-					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
+					ndist = wdist;
 				}
 			}
 		}
@@ -386,33 +371,22 @@ ww_find_neighbour (WnckScreen	*screen,
 	{
 		for ( next = windows; next; next = next->next )
 		{
-			wnck_window_get_geometry (next->data, &wx, &wy, &ww, &wh);
+			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
+			wdist = ww_distance (wx, wy, ax, ay);
 			if ( wy < ay )
 			{
-				if ( neighbour == NULL )
+				if ( wdist < ndist )
 				{
 					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
-				}
-				else if ( wy == ny )
-				{
-					if ( abs(wx - ax) < abs(nx - ax) )
-					{
-						neighbour = WNCK_WINDOW (next->data);
-						nx = wx; ny = wy; nw = ww; nh = wh;
-					}
-				}
-				else if ( wy > ny ) {
-					neighbour = WNCK_WINDOW (next->data);
-					nx = wx; ny = wy; nw = ww; nh = wh;
+					ndist = wdist;
 				}
 			}
 		}
 	}
 
 	if (neighbour)
-		g_debug ("Found neighbour '%s' (%d, %d) @ %d x %d",
-		         wnck_window_get_name (neighbour), nx, ny, nw, nh);			
+		g_debug ("Found neighbour '%s'",
+		         wnck_window_get_name (neighbour));
 	
 	return neighbour; 
 }
