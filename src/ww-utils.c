@@ -265,9 +265,49 @@ ww_window_center (WnckWindow *win, int *center_x, int *center_y)
 }
 
 static double
-ww_distance (int x1, int y1, int x2, int y2)
+ww_euclidian_distance (int x1, int y1, int x2, int y2)
 {
 	return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+}
+
+/**
+ * ww_x_weighted_distance
+ * @x1:
+ * @y1:
+ * @x2:
+ * @y2:
+ *
+ * Calculate a non-euclidian distance between two points that is stretched in
+ * x-dimension, making differences in the x-dimension bigger.
+ *
+ * Return value: A non-euclidian distance measure between the two points
+ *               (@x1,@y1) and (@x2,@y2) that is skewed to make differences
+ *               in the x-dimension more important
+ */
+static double
+ww_x_weighted_distance (int x1, int y1, int x2, int y2)
+{
+	return sqrt( abs((x1-x2)*(x1-x2)*(x1-x2)) + (y1-y2)*(y1-y2));
+}
+
+/**
+ * ww_y_weighted_distance
+ * @x1:
+ * @y1:
+ * @x2:
+ * @y2:
+ *
+ * Calculate a non-euclidian distance between two points that is stretched in
+ * y-dimension, making differences in the y-dimension bigger.
+ *
+ * Return value: A non-euclidian distance measure between the two points
+ *               (@x1,@y1) and (@x2,@y2) that is skewed to make differences
+ *               in the y-dimension more important
+ */
+static double
+ww_y_weighted_distance (int x1, int y1, int x2, int y2)
+{
+	return sqrt((x1-x2)*(x1-x2) + abs((y1-y2)*(y1-y2)*(y1-y2)) );
 }
 
 /**
@@ -324,7 +364,7 @@ ww_find_neighbour (WnckScreen	*screen,
 		for ( next = windows; next; next = next->next )
 		{
 			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
-			wdist = ww_distance (wx, wy, ax, ay);
+			wdist = ww_y_weighted_distance (wx, wy, ax, ay);
 			if ( wx < ax )
 			{
 				if ( wdist < ndist )
@@ -340,7 +380,7 @@ ww_find_neighbour (WnckScreen	*screen,
 		for ( next = windows; next; next = next->next )
 		{
 			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
-			wdist = ww_distance (wx, wy, ax, ay);
+			wdist = ww_y_weighted_distance (wx, wy, ax, ay);
 			if ( wx > ax )
 			{
 				if ( wdist < ndist )
@@ -356,7 +396,7 @@ ww_find_neighbour (WnckScreen	*screen,
 		for ( next = windows; next; next = next->next )
 		{
 			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
-			wdist = ww_distance (wx, wy, ax, ay);
+			wdist = ww_x_weighted_distance (wx, wy, ax, ay);
 			if ( wy > ay )
 			{
 				if ( wdist < ndist )
@@ -372,7 +412,7 @@ ww_find_neighbour (WnckScreen	*screen,
 		for ( next = windows; next; next = next->next )
 		{
 			ww_window_center (WNCK_WINDOW (next->data), &wx, &wy);
-			wdist = ww_distance (wx, wy, ax, ay);
+			wdist = ww_x_weighted_distance (wx, wy, ax, ay);
 			if ( wy < ay )
 			{
 				if ( wdist < ndist )
