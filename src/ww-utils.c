@@ -1,6 +1,7 @@
 /*
  * This file is part of WinWrangler.
  * Copyright (C) Mikkel Kamstrup Erlandsen 2008 <mikkel.kamstrup@gmail.com>
+ *               Alessio 'molok' Bolognino <themolok@gmail.com>
  *
  *  WinWrangler is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
