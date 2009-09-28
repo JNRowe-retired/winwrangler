@@ -287,7 +287,7 @@ ww_euclidian_distance (int x1, int y1, int x2, int y2)
 static double
 ww_x_weighted_distance (int x1, int y1, int x2, int y2)
 {
-	return sqrt( abs((x1-x2)*(x1-x2)*(x1-x2)) + (y1-y2)*(y1-y2));
+	return sqrt( (x1-x2)*(x1-x2)*2 + (y1-y2)*(y1-y2));
 }
 
 /**
@@ -307,7 +307,7 @@ ww_x_weighted_distance (int x1, int y1, int x2, int y2)
 static double
 ww_y_weighted_distance (int x1, int y1, int x2, int y2)
 {
-	return sqrt((x1-x2)*(x1-x2) + abs((y1-y2)*(y1-y2)*(y1-y2)) );
+	return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)*2 );
 }
 
 /**
