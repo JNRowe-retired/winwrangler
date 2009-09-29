@@ -1,3 +1,10 @@
+winwrangler (0.2.4~ppa1) jaunty; urgency=low
+
+  * New upstream release
+
+ -- Mikkel Kamstrup Erlandsen <mikkel.kamstrup@gmail.com>  Tue, 29 Sep 2009 20:48:39 +0200
+
+
 winwrangler (0.2.3-ppa1) jaunty; urgency=low
 
   * New upstream release
