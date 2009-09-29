@@ -15,9 +15,36 @@ WinWrangler provides a desktop daemon that can be controlled via desktop-wide
 hotkeys to do advanced window manipulations that are not normally provided by
 the window manager. For example tiling and intelligent expansion of windows.
 
+Features
+--------
+ * Expand window - expand the currently active window to fill all
+   available space without overlapping any new windows
+ 
+ * Tile windows - Tile all windows on the current workspace in a grid
+ 
+ * 2/3 layout - Make the active window fill 2/3 of the desktop while arranging
+   the rest of the windows in the remaining 1/3.
+ 
+ * Spatial window switching - Switch active window to the nearest neighbour
+   in the up, down, left, or right directions
+
+Hotkeys
+-------
+Here follows the defailt hotkeys. They can be manually configured in the file
+~/.config/hotkeys/winwrangler.hotkeys
+
+ * <Control><Super>1 - Expand window
+ * <Control><Super>2 - Tile windows
+ * <Control><Super>3 - 2/3 layout
+ * <Control><Super>Up|Down|Left|Right - Spatial window switch
+ 
 Honorable Mentions
 ------------------
-
- * The WinWrangler icons are based on the Tango window icon
+ * Mads Villadsen - Build fixes
+ * Alessio Bolognino - for the 2/3 Layout and initial work on spatial
+   window switching
+ * Wouter Bolsterlee - Build- and code cleanup, i18n enabling and
+   dutch translation
+ * The Tango team - The WinWrangler icons are based on the Tango window icon
  * Vincent Untz, Elijah Newren, and Thomas Thurman for being responsive and
    helpful in sorting out bugs in Metacity and libwnck
