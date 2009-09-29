@@ -1,3 +1,175 @@
+2009-09-29  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* configure.ac:
+
+	Bump version to 0.2.4
+
+2009-09-29  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layouts.c:
+
+	Clean up the language regarding the new spatial switching
+
+2009-09-29  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* README:
+
+	Write feature list and usage instructions in the README
+
+2009-09-28  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-utils.c:
+
+	Make the weighted distance functions less distorted - in fact
+	they use a simple elliptic geometry now (it was probably something
+	like hyperbolic before)
+
+2009-09-27  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-utils.c:
+
+	Make the ww_find_neighbour() method use a non-euclidian geometry to find the neighbours. Fx. when finding the LEFT neighbour we should punish differences in the y-coordinate heavily because windows in roughly the same y-plane as us a "better neighbours"
+
+2009-09-27  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-utils.c:
+
+	Reimplement ww_find_neighbour() based on the distances between the windows' centers of gravity instead of their borders. This makes the navigation feel more natural when the windows are in a skew grid
+
+2009-09-27  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layout-switch-spatial.c:
+	* src/Makefile.am:
+	* src/winwrangler.h:
+	* src/ww-hotkeys.c:
+	* src/ww-layout-twothirds.c:
+	* src/ww-layouts.c:
+	* src/ww-layouts.h:
+	* src/ww-tray.c:
+	* src/ww-utils.c:
+
+	Merge lp:~kamstrup/winwrangler/winwrangler-spatial-switch
+
+2009-09-27  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layout-switch-spatial.c:
+	* src/ww-utils.c:
+
+	Add myself to the copyright header for ww-layout-switch-spatial.c and add Alessio to ww-utils.c
+
+2009-09-26  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/Makefile.am:
+	* src/ww-layouts.c:
+	* src/ww-layouts.h:
+	* src/ww-layout-activate.c:
+	* src/ww-layout-switch-spatial.c:
+
+	Rename ww-layout-activate.c to ww-layout-switch-spatial.c and change all function signatures accordingly
+
+2009-09-26  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layouts.c:
+
+	Change hotkeys for spatial window switching to use arrow keys+Ctrl+Super
+
+2009-09-25  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layout-activate.c:
+
+	Make use of the new ww_get_event_time() function in ww-layout-activate.c. This makes window switching work smoothly (tested under Compiz for now)
+
+2009-09-25  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/winwrangler.h:
+	* src/ww-hotkeys.c:
+	* src/ww-utils.c:
+
+	Add functions ww_get_event_time() and ww_set_event_time(guint32) for event time handling to get around focus stealing prevention
+
+2009-09-18  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/winwrangler.h:
+	* src/ww-layout-activate.c:
+	* src/ww-utils.c:
+
+	Move ww_find_neighbour() into ww_utils.c and declare it winwrangler.h
+	
+	Move declaration of WwDirection in winwrangler.h
+
+2009-09-18  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layout-activate.c:
+
+	Turn ww_layout_activate() into a utility function ww_find_neighbour()
+
+2009-09-18  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* src/ww-layout-activate.c:
+
+	Simplify implementation of ww_layout_activate() in ww-layout-activate.c
+
+2009-09-17  Alessio Bolognino  <themolok@gmail.com>
+
+	* src/ww-layout-activate.c:
+
+	more aesthetic stuff 
+
+2009-09-17  Alessio Bolognino  <themolok@gmail.com>
+
+	* src/Makefile.am:
+	* src/ww-layout-activate.c:
+	* src/ww-layout-twothirds.c:
+	* src/ww-layouts.c:
+	* src/ww-layouts.h:
+	* src/ww-tray.c:
+
+	Little fixes
+
+2009-09-17  Alessio Bolognino  <themolok@gmail.com>
+
+	* src/ww-layout-activate.c:
+
+	Added ww-layout-activate.c, it lets you activate window on the
+	left/right/up/down of the active window
+
+2009-09-16  Alessio Bolognino  <themolok@gmail.com>
+
+	* ChangeLog:
+	* HACKING:
+	* configure.ac:
+	* debian/changelog:
+	* debian/control:
+
+	Bump to 0.2.3
+
+2009-09-12  Alessio Bolognino  <themolok@gmail.com>
+
+	* src/ww-layout-twothirds.c:
+
+	Simplify detection of no-active-window in ww-layout-twothirds.c
+
+2009-09-22  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* Makefile.am:
+
+	Install docs in ${datadir} not uder ${prefix}, patch courtesy Mads Villadsen <maxx@krakoa.dk>
+
+2009-09-16  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* HACKING:
+
+	Add a section to HACKING explaining how to upload a
+	source package to a Ubuntu PPA
+
+2009-09-16  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
+
+	* ChangeLog:
+	* debian/changelog:
+	* debian/control:
+
+	Include Ubuntu .deb updates
+
 2009-09-16  "Mikkel Kamstrup Erlandsen"  <mikkel.kamstrup@gmail.com>
 
 	* configure.ac:
